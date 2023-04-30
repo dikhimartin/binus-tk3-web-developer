@@ -19,8 +19,8 @@ class RolesTableSeeder extends Seeder
                 'display_name' => 'Super Admin',
                 'description' => ' pengguna yang memiliki akses penuh dan kontrol atas semua fitur dan fungsi dalam sistem. Mereka dapat membuat, mengedit, menghapus dan membatalkan hak akses pengguna lain dalam sistem.',
                 'status' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 2,
@@ -28,8 +28,8 @@ class RolesTableSeeder extends Seeder
                 'display_name' => 'Admin',
                 'description' => 'pengguna yang memiliki hak akses yang lebih rendah daripada Super Admin. Mereka dapat mengakses dan mengelola beberapa fitur dalam sistem sesuai dengan wewenang yang diberikan oleh Super Admin, seperti mengelola pengguna dan memodifikasi konten tertentu.',
                 'status' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 3,
@@ -37,8 +37,8 @@ class RolesTableSeeder extends Seeder
                 'display_name' => 'Guest',
                 'description' => 'pengguna yang tidak memiliki hak akses khusus dalam sistem dan biasanya hanya dapat mengakses fitur dasar yang tersedia untuk publik seperti membaca informasi umum atau mengakses halaman depan situs web. Mereka tidak dapat melakukan perubahan atau modifikasi dalam sistem.',
                 'status' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ]
         ]);
     }

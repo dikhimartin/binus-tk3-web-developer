@@ -19,8 +19,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Role List',
                 'description' => 'Role List',
                 'sort' => 2,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 2,
@@ -28,8 +28,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Role Add',
                 'description' => 'Role Add',
                 'sort' => 2,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 3,
@@ -37,8 +37,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Role Edit',
                 'description' => 'Role Edit',
                 'sort' => 2,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 4,
@@ -46,8 +46,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Role Delete',
                 'description' => 'Role Delete',
                 'sort' => 2,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 5,
@@ -55,8 +55,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Users List',
                 'description' => 'Users list',
                 'sort' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 6,
@@ -64,8 +64,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Users Create',
                 'description' => 'Users create',
                 'sort' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 7,
@@ -73,8 +73,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Users Edit',
                 'description' => 'Users edit',
                 'sort' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 8,
@@ -82,8 +82,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Users Delete',
                 'description' => 'Users delete',
                 'sort' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 9,
@@ -91,8 +91,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Sample List',
                 'description' => 'Sample List',
                 'sort' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 10,
@@ -100,8 +100,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Sample Create',
                 'description' => 'Sample Create',
                 'sort' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 11,
@@ -109,8 +109,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Sample Edit',
                 'description' => 'Sample Edit',
                 'sort' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ],
             [
                 'id' => 12,
@@ -118,8 +118,8 @@ class PermissionsTableSeeder extends Seeder
                 'display_name' => 'Sample Delete',
                 'description' => 'Sample Delete',
                 'sort' => 1,
-                'created_at' => '2023-03-17 14:24:23',
-                'updated_at' => '2023-03-17 14:24:23'
+                'created_at' => now(),
+                'updated_at' => now()
             ]
             // add new permissions here 
         ]);

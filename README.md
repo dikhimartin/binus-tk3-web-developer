@@ -56,7 +56,7 @@ Demo : [https://laravel.com](https://laravel.com)
 - Buka browser pada URL  http://localhost:8000, untuk mengakses aplikasi.
 
   - Akses Login 
-    - Username   : superadmin
+    - Username    : superadmin
     - Password    : superadmin
 
 - Buka browser pada URL  http://localhost:8080, untuk mengakses PHPmyadmin (Database Management).
