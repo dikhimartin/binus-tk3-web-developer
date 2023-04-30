@@ -44,12 +44,12 @@
 										</label>
 										<!--begin::Option-->
 										<label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-											<input class="form-check-input" type="radio" name="status" value="1" />
+											<input class="form-check-input" type="radio" name="status" value="0" />
 											<span class="form-check-label text-gray-600">{{ __('main.active') }}</span>
 										</label>
 										<!--begin::Option-->
 										<label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
-											<input class="form-check-input" type="radio" name="status" value="0" />
+											<input class="form-check-input" type="radio" name="status" value="1" />
 											<span class="form-check-label text-gray-600">{{ __('main.non-active') }}</span>
 										</label>
 									</div>
@@ -114,13 +114,13 @@
 						<label class="fs-6 fw-semibold mb-2">Status</label>
 						<div class="d-flex">
 							<label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-							<input class="form-check-input" type="radio" value="1" id="flexCheckChecked1" name="status" checked="">
+							<input class="form-check-input" type="radio" value="0" id="flexCheckChecked1" name="status" checked="">
 								<label class="form-check-label" for="flexCheckDefault1">
 									{{ __('main.active') }}
 								</label>
 							</label>
 							<label class="form-check form-check-sm form-check-custom form-check-solid">
-								<input class="form-check-input" type="radio" value="0" id="flexCheckChecked1" name="status">
+								<input class="form-check-input" type="radio" value="1" id="flexCheckChecked1" name="status">
 								<label class="form-check-label" for="flexCheckDefault1">
 									{{ __('main.non-active') }}
 								</label>
@@ -251,8 +251,8 @@
 						{
 							targets: 3,
 							render: function (data) {
-								var labelClass = data == 1 ? 'primary' : 'danger';
-								var labelText = data == 1 ? '{{ __('main.active') }}' : '{{ __('main.non-active') }}';
+								var labelClass = data == 0 ? 'primary' : 'danger';
+								var labelText = data == 0 ? '{{ __('main.active') }}' : '{{ __('main.non-active') }}';
 								return '<span class="badge badge-' + labelClass + '">' + labelText + '</span>';
 							}
 						},

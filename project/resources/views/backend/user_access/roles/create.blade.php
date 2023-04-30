@@ -63,13 +63,13 @@
 											<label class="fs-6 fw-semibold mb-2">Status</label>
 											<div class="d-flex">
 												<label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-												<input class="form-check-input" type="radio" value="1" id="flexCheckChecked1" name="status" checked="">
+												<input class="form-check-input" type="radio" value="0" id="flexCheckChecked1" name="status" checked="">
 													<label class="form-check-label" for="flexCheckDefault1">
 														{{ __('main.active') }}
 													</label>
 												</label>
 												<label class="form-check form-check-sm form-check-custom form-check-solid">
-													<input class="form-check-input" type="radio" value="0" id="flexCheckChecked1" name="status">
+													<input class="form-check-input" type="radio" value="1" id="flexCheckChecked1" name="status">
 													<label class="form-check-label" for="flexCheckDefault1">
 														{{ __('main.non-active') }}
 													</label>

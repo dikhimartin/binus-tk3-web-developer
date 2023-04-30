@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Superadmin',
                 'password' => Hash::make('superadmin'),
                 'email' => 'superadmin@mail.com',
-                'status' => 1,
+                'status' => 0,
                 'additional' => null,
                 'remember_token' => null,
             ],

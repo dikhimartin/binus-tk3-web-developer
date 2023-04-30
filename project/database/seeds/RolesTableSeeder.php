@@ -18,7 +18,7 @@ class RolesTableSeeder extends Seeder
                 'name' => 'Super Admin',
                 'display_name' => 'Super Admin',
                 'description' => ' pengguna yang memiliki akses penuh dan kontrol atas semua fitur dan fungsi dalam sistem. Mereka dapat membuat, mengedit, menghapus dan membatalkan hak akses pengguna lain dalam sistem.',
-                'status' => 1,
+                'status' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
@@ -27,16 +27,25 @@ class RolesTableSeeder extends Seeder
                 'name' => 'Admin',
                 'display_name' => 'Admin',
                 'description' => 'pengguna yang memiliki hak akses yang lebih rendah daripada Super Admin. Mereka dapat mengakses dan mengelola beberapa fitur dalam sistem sesuai dengan wewenang yang diberikan oleh Super Admin, seperti mengelola pengguna dan memodifikasi konten tertentu.',
-                'status' => 1,
+                'status' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'id' => 3,
-                'name' => 'Guest',
-                'display_name' => 'Guest',
+                'name' => 'Staff',
+                'display_name' => 'Staff',
+                'description' => 'pengguna yang memiliki hak akses yang lebih rendah daripada Super Admin. Mereka dapat mengakses dan mengelola beberapa fitur dalam sistem sesuai dengan wewenang yang diberikan oleh Super Admin, seperti mengelola pengguna dan memodifikasi konten tertentu.',
+                'status' => 0,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'id' => 4,
+                'name' => 'Pembeli',
+                'display_name' => 'Pembeli',
                 'description' => 'pengguna yang tidak memiliki hak akses khusus dalam sistem dan biasanya hanya dapat mengakses fitur dasar yang tersedia untuk publik seperti membaca informasi umum atau mengakses halaman depan situs web. Mereka tidak dapat melakukan perubahan atau modifikasi dalam sistem.',
-                'status' => 1,
+                'status' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
             ]
