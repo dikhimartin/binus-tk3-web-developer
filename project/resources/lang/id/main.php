@@ -73,6 +73,14 @@ return [
     'select_all' => 'Pilih Semua',
     'back_to_home' => 'Kembali ke halaman utama',
     'welcome_back' => 'Selamat datang kembali',
+    'male' => 'Laki-laki',
+    'female' => 'Perempuan',
+    'province' => 'Provinsi',
+    'city' => 'Kota',
+    'subdistrict' => 'Kecamatan',
+    'address_line' => 'Alamat Lengkap',
+    'not_valid_email' => 'Email tidak vaild',
+    'please_choose' => 'Silahkan memilih',
 
     // Profile
     'profile' =>'Profil saya',
@@ -97,4 +105,11 @@ return [
     // Sample
     'sample' => 'Sample',
     'sample_list' => 'Daftar Sample',
+
+    // Customer
+    'customer' => 'Pembeli',
+    'customer_list' => 'Daftar Pembeli',
+    'place_of_birth' => 'Tempat Lahir',
+    'date_of_birth' => 'Tanggal Lahir',
+    'gender' => 'Jenis Kelamin',
 ];

@@ -61,11 +61,26 @@
                 cancelButton.addEventListener('click', function (e) {
                     e.preventDefault();
                     form.reset(); // Reset form	
+
+                    var selects = form.querySelectorAll('select');
+                    if (selects !== null && selects !== undefined) {
+                        selects.forEach(select => {
+                            $(select).val('').trigger('change');
+                        });
+                    }
                 });
                 
                 closeButton.addEventListener('click', function(e){
                     e.preventDefault();
                     form.reset(); // Reset form	
+
+                    var selects = form.querySelectorAll('select');
+                    if (selects !== null && selects !== undefined) {
+                        selects.forEach(select => {
+                            $(select).val('').trigger('change');
+                        });
+                    }
+                                        
                     $('#{{ $modal_id }}_trigger').modal('hide');
                 })
             }

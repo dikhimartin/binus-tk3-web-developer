@@ -22,7 +22,6 @@ class CreateStaffTable extends Migration
             $table->uuid('modifier_id')->nullable(true)->index();
             $table->integer('sort')->nullable();
             $table->string('additional', 100)->nullable(true);
-            $table->rememberToken();
             $table->timestamps();
         });
     }

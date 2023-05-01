@@ -13,6 +13,13 @@ Route::get('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
+Route::prefix('location')->group(function () {
+    Route::get('province', 'LocationController@province');
+    Route::get('city/{province_id}', 'LocationController@city');
+    Route::get('subdistrict/{city_id}', 'LocationController@subdistrict');
+    Route::get('village/{subdistrict_id}', 'LocationController@village');
+});
+
 
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'namespace' => 'Admin'), function () {
 
@@ -81,6 +88,19 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::put('/samples/{id}','SampleController@update');
 	Route::delete('/samples/{id}','SampleController@delete');
 	Route::post('/samples/delete/batch','SampleController@delete_batch');
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | Module Customer
+	 |--------------------------------------------------------------------------
+	*/	
+	Route::get('/customer','CustomersController@index');
+	Route::get('/customers','CustomersController@get_data');
+	Route::get('/customers/{id}','CustomersController@detail');
+	Route::post('/customers','CustomersController@create');
+	Route::put('/customers/{id}','CustomersController@update');
+	Route::delete('/customers/{id}','CustomersController@delete');
+	Route::post('/customers/delete/batch','CustomersController@delete_batch');
 
 });
 
