@@ -33,6 +33,47 @@ class Customer extends Model
 
     protected $keyType = 'uuid';
 
+
+    // Query Builder version
+    public function get_data(){
+        $data = Customer::select(
+            'customers.id',
+            'users.username',
+            'users.name',
+            'users.email',
+            'customers.place_of_birth',
+            'customers.date_of_birth',
+            'customers.gender',
+            'customers.status',
+            'provinces.id as province_id',
+            'provinces.name as province',
+            'cities.id as city_id',
+            'cities.name as city',
+            'subdistricts.id as subdistrict_id',
+            'subdistricts.name as subdistrict',
+            'customers.address_line as address_line',
+            'avatar.absolute_path as avatar_absolute_path',
+            'avatar.relative_path as avatar_relative_path',
+            'avatar.file_name as avatar_name',
+            'nid.absolute_path as nid_absolute_path',
+            'nid.relative_path as nid_relative_path',
+            'nid.file_name as nid_name',
+            'roles.display_name',
+            'roles.description',
+            'role_user.role_id',
+            'customers.created_at',
+            'customers.updated_at')
+        ->leftjoin('users', 'users.id', '=', 'customers.user_id')
+        ->leftjoin('assets as avatar', 'users.asset_id', '=', 'avatar.id')
+        ->leftjoin('assets as nid', 'customers.national_identity_asset_id', '=', 'nid.id')
+        ->join('provinces', 'customers.province_id', '=', 'provinces.id')
+        ->join('cities', 'customers.city_id', '=', 'cities.id')
+        ->leftjoin('subdistricts', 'customers.subdistrict_id', '=', 'subdistricts.id')
+        ->leftjoin('role_user', 'users.id', '=', 'role_user.user_id')
+        ->leftjoin('roles', 'role_user.role_id', '=', 'roles.id');
+        return $data;
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }

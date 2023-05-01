@@ -324,11 +324,24 @@
 						const data = response.data;
 
 						$('input[name="name"]').val(data.name);
+						$('input[name="date_of_birth"]').val(data.date_of_birth);
+						$('input[name="place_of_birth"]').val(data.place_of_birth);
 						$('input[name="email"]').val(data.email);
 						$('input[name="username"]').val(data.username);
 						
-						// Set the radio button value based on the role_id value
-						$('input[name="role_id"][value="' + data.role_id + '"]').prop('checked', true);
+						// Set the radio button value based on the gender value
+						$('input[name="gender"][value="' + data.gender + '"]').prop('checked', true);
+
+						// set data to location and update placeholder
+						$('select[name="province_id"]').val(data.province_id).trigger('change').attr('data-placeholder', data.province_id);
+						setTimeout(function(){
+							$('select[name="city_id"]').val(data.city_id).trigger('change').attr('data-placeholder', data.city_id);
+							$('#city').trigger('change'); // trigger change to load subdistrict data
+							setTimeout(function(){
+								$('select[name="subdistrict_id"]').val(data.subdistrict_id).trigger('change').attr('data-placeholder', data.subdistrict_id);
+							}, 500); // wait 0.5 second before setting subdistrict to ensure it is loaded
+						}, 500); // wait 0.5 second before setting city to ensure it is loaded
+						$('textarea[name="address_line"]').val(data.address_line);
 
 						// Set Image path
 						var path = `{{ config('app.url') }}`;

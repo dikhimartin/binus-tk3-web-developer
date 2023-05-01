@@ -49,8 +49,8 @@ class CustomersController extends Controller
             return $this->unauthorizedAccessModule();
         }        
 
-        $user = new User;
-        $datas = $user->get_data();
+        $customer = new Customer;
+        $datas = $customer->get_data();
 
         return DataTables::of($datas)
         ->filter(function ($query) use ($request) {
@@ -60,15 +60,15 @@ class CustomersController extends Controller
                     $query->where('users.name', 'like', "%$value%")
                         ->orWhere('users.username', 'like', "%$value%")
                         ->orWhere('users.email', 'like', "%$value%")
-                        ->orWhere('users.status', 'like', "%$value%")
-                        ->orWhereHas('roles', function ($q) use ($value) {
-                            $q->where('display_name', 'like', "%{$value}%");
-                        });
+                        ->orWhere('users.status', 'like', "%$value%");
+                        // ->orWhereHas('roles', function ($q) use ($value) {
+                        //     $q->where('display_name', 'like', "%{$value}%");
+                        // });
                 });
             });
-            if (Auth::user()->role_id != 1) {
-                $query->where('users.role_id', '!=', 1);
-            }
+            // if (Auth::user()->role_id != 1) {
+            //     $query->where('users.role_id', '!=', 1);
+            // }
         })
         ->addColumn('action', function ($data) {
             // add your action column logic here
@@ -207,8 +207,8 @@ class CustomersController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
-        $user = new User;
-        $datas = $user->get_data();
+        $customer = new Customer;
+        $datas = $customer->get_data();
 
         $res = $datas->find($id);
         if($res == null){
