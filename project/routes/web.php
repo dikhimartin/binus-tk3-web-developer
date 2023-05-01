@@ -102,6 +102,19 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::delete('/customers/{id}','CustomersController@delete');
 	Route::post('/customers/delete/batch','CustomersController@delete_batch');
 
+	/*
+	 |--------------------------------------------------------------------------
+	 | Module Staff
+	 |--------------------------------------------------------------------------
+	*/	
+	Route::get('/staff','StaffController@index');
+	Route::get('/staffs','StaffController@get_data');
+	Route::get('/staffs/{id}','StaffController@detail');
+	Route::post('/staffs','StaffController@create');
+	Route::put('/staffs/{id}','StaffController@update');
+	Route::delete('/staffs/{id}','StaffController@delete');
+	Route::post('/staffs/delete/batch','StaffController@delete_batch');
+
 });
 
 

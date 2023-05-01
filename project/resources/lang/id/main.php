@@ -112,4 +112,8 @@ return [
     'place_of_birth' => 'Tempat Lahir',
     'date_of_birth' => 'Tanggal Lahir',
     'gender' => 'Jenis Kelamin',
+
+    // Staff
+    'staff' => 'Staff',
+    'staff_list' => 'Daftar Staff',
 ];
