@@ -164,15 +164,21 @@ class CustomersController extends Controller
             return $this->unauthorizedAccessModule();
         }       
         
-        $validator = $this->validate_data($request, $id);
-        if ($validator->fails()) {
-            return $this->badRequest($validator->errors());
-        }        
-
-        $user = User::find($id);
-        if($user == null){
+        $customer = Customer::find($id);
+        if(!$customer){
             return $this->errorNotFound(null);
         }     
+        
+        $user = User::find($customer->user_id);
+        if(!$user){
+            return $this->errorNotFound(null);
+        }  
+        
+        
+        $validator = $this->validate_data($request, $user->id);
+        if ($validator->fails()) {
+            return $this->badRequest($validator->errors());
+        }   
 
         // set remove image
         if($request->avatar_remove == "0" || $request->avatar_remove == "1"){
@@ -183,12 +189,12 @@ class CustomersController extends Controller
         }
 
         // set image assets
-        $asset = Asset::upload($request->file('avatar'), "users", $user->asset_id);
-        if ($asset['status'] == 'error') {
-            return $this->badRequest($asset['message']);
+        $avatar = Asset::upload($request->file('avatar'), "users", $user->asset_id);
+        if ($avatar['status'] == 'error') {
+            return $this->badRequest($avatar['message']);
         }
-        if (!empty($asset['data'])) {
-            $user->asset_id = $asset['data']->id;
+        if (!empty($avatar['data'])) {
+            $user->asset_id = $avatar['data']->id;
         }
         if (!empty($request->password)) {
             $user->password = bcrypt($request->password);
@@ -198,6 +204,22 @@ class CustomersController extends Controller
         $user->email = $request->email;
         $user->username = $request->username;
         $user->save();   
+
+        $nid = Asset::upload($request->file('national_identity_document'), "national_identity", $customer->national_identity_asset_id);
+        if ($nid['status'] == 'error') {
+            return $this->badRequest($nid['message']);
+        }
+        if (!empty($nid['data'])) {
+            $customer->national_identity_asset_id = $nid['data']->id;
+        }
+        $customer->place_of_birth = $request->place_of_birth;
+        $customer->date_of_birth = $request->date_of_birth;
+        $customer->gender = $request->gender;
+        $customer->province_id = $request->province_id;
+        $customer->city_id = $request->city_id;
+        $customer->subdistrict_id = $request->subdistrict_id;
+        $customer->address_line = $request->address_line;
+        $customer->save();
 
         return $this->ok($user, null);
     }
@@ -222,13 +244,21 @@ class CustomersController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
-        $user = User::find($id);
+        $customer = Customer::find($id);
+        if (!$customer) {
+            return $this->errorNotFound(null);
+        }     
+        $user = User::find($customer->user_id);
         if (!$user) {
             return $this->errorNotFound(null);
         }
         if (!empty($user->asset_id)) {
             Asset::remove($user->asset_id);
         }
+        if (!empty($customer->national_identity_asset_id)) {
+            Asset::remove($customer->national_identity_asset_id);
+        }
+        $customer->delete();
         $user->delete();
 
         return $this->deleted("Data deleted successfully");
@@ -241,13 +271,21 @@ class CustomersController extends Controller
     
         $ids = $request->input('id');
         foreach ($ids as $id) {
-            $user = User::find($id);
+            $customer = Customer::find($id);
+            if (!$customer) {
+                return $this->errorNotFound(null);
+            }     
+            $user = User::find($customer->user_id);
             if (!$user) {
                 return $this->errorNotFound(null);
             }
             if (!empty($user->asset_id)) {
                 Asset::remove($user->asset_id);
             }
+            if (!empty($customer->national_identity_asset_id)) {
+                Asset::remove($customer->national_identity_asset_id);
+            }
+            $customer->delete();
             $user->delete();
         }
     
