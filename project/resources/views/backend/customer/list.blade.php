@@ -134,13 +134,19 @@
 								<div class="form-text">{{ __('main.allowed_file_types', ['value' => "png, jpg, jpeg"]) }}</div>
 								<div class="text-primary">{{ __('main.info_image_pixels', ['value' => "150 x 150"]) }}</div>
 							</div>
-
-
+							
+							
 							<div class="fv-row mb-7">
 								<label class="d-block fw-semibold fs-6 mb-5">KTP (Kartu tanda penduduk)</label>
 								<input type="file" class="dropzone" name="national_identity_document">
+								<div class="form-text">{{ __('main.allowed_file_types', ['value' => "png, jpg, jpeg"]) }}</div>
+								<div class="text-primary">{{ __('main.info_image_pixels', ['value' => "500 x 312"]) }}</div>
 							</div>
-
+							
+							<div class="fv-row mb-7">
+								<img id="preview_national_identity" class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded" height="312" width="500"
+								src="{{ URL::asset('images/national_identity_card.png') }}" >
+							</div>
 							
 							<div class="fv-row mb-7">
 								<label class="required fs-6 mb-2">{{ __('main.name') }}</label>
@@ -296,6 +302,8 @@
 			var avatar = path + '/images/profile/anonymous.png';
 			$('.image-input-wrapper').css('background-image', 'url(' + avatar + ')');
 
+			$("#preview_national_identity").hide();
+
 			// Show the modal
 			$('#{{ $controller  }}_trigger').modal('show');
 		}	
@@ -312,6 +320,7 @@
 			$('input[name="_method"]').val('put');
 			$('input[name="_id"]').val(id);
 			$('input[name="avatar_remove"]').val(null);
+			$("#preview_national_identity").show();
 
 
 			// Fetching data
@@ -350,6 +359,12 @@
 							avatar = path + '/' + data.avatar_relative_path; 
 						}						
 						$('.image-input-wrapper').css('background-image', 'url(' + avatar + ')');
+						
+						var nid = path + '/images/national_identity_card.png';
+						if (data.nid_relative_path != null){
+							nid = path + '/' + data.nid_relative_path; 
+						}						
+						$("#preview_national_identity").attr('src', nid);
 
 						// Show the modal
 						$('#{{ $controller  }}_trigger').modal('show');				
