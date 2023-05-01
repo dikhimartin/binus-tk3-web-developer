@@ -360,6 +360,7 @@
 						}						
 						$('.image-input-wrapper').css('background-image', 'url(' + avatar + ')');
 						
+						// Set Nationality Document path
 						var nid = path + '/images/national_identity_card.png';
 						if (data.nid_relative_path != null){
 							nid = path + '/' + data.nid_relative_path; 

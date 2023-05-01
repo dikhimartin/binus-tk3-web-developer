@@ -65,7 +65,7 @@
 					
 					@slot('button_slot')
 						<!--begin::Add data-->
-						@permission('customer-create')
+						@permission('staff-create')
 							<button type="button" class="btn btn-primary" onclick="add()">{{__('main.add_new')}}</button>
 						@endpermission
 					@endslot
@@ -83,7 +83,6 @@
 								</div>
 							</th>
 							<th>{{ __('main.users') }}</th>
-							<th>Alamat</th>
 							<th>{{ __('main.gender') }}</th>
 							<th>{{ __('main.created_date') }}</th>
 							<th>{{ __('main.updated_date') }}</th>
@@ -102,9 +101,6 @@
 					<ul class="nav nav-tabs nav-line-tabs mb-10 fs-6">
 						<li class="nav-item">
 							<a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1">Profil</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2">Alamat</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_3">Akun</a>
@@ -135,37 +131,14 @@
 								<div class="text-primary">{{ __('main.info_image_pixels', ['value' => "150 x 150"]) }}</div>
 							</div>
 							
-							
-							<div class="fv-row mb-7">
-								<label class="d-block fw-semibold fs-6 mb-5">KTP (Kartu tanda penduduk)</label>
-								<input type="file" class="dropzone" name="national_identity_document">
-								<div class="form-text">{{ __('main.allowed_file_types', ['value' => "png, jpg, jpeg"]) }}</div>
-								<div class="text-primary">{{ __('main.info_image_pixels', ['value' => "500 x 312"]) }}</div>
-							</div>
-							
-							<div class="fv-row mb-7">
-								<img id="preview_national_identity" class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded" height="312" width="500"
-								src="{{ URL::asset('images/national_identity_card.png') }}" >
-							</div>
-							
 							<div class="fv-row mb-7">
 								<label class="required fs-6 mb-2">{{ __('main.name') }}</label>
-								<input type="text" name="name" class="form-control customer- mb-3 mb-lg-0" placeholder="{{ __('main.name') }}"  />
+								<input type="text" name="name" class="form-control staff- mb-3 mb-lg-0" placeholder="{{ __('main.name') }}"  />
 							</div>
 
 							<div class="fv-row mb-7">
 								<label class="required fw-semibold fs-6 mb-2">{{ __('main.email') }}</label>
-								<input type="email" name="email" class="form-control customer- mb-3 mb-lg-0" placeholder="{{ __('main.email') }}" />
-							</div>
-
-							<div class="fv-row mb-7">
-								<label class="required fs-6 mb-2">{{ __('main.place_of_birth') }}</label>
-								<input type="text" name="place_of_birth" class="form-control customer- mb-3 mb-lg-0" placeholder="{{ __('main.place_of_birth') }}"  />
-							</div>
-							
-							<div class="fv-row mb-7" id="kt_td_picker_date_only">
-								<label class="required fs-6 mb-2">{{ __('main.date_of_birth') }}</label>
-								<input type="date" name="date_of_birth" class="form-control" placeholder="{{ __('main.date_of_birth') }}" data-td-target="#kt_td_picker_date_only"/>
+								<input type="email" name="email" class="form-control staff- mb-3 mb-lg-0" placeholder="{{ __('main.email') }}" />
 							</div>
 
 							<div class="fv-row mb-7">
@@ -189,51 +162,11 @@
 						
 						</div>
 
-						<!-- Address -->
-						<div class="tab-pane" id="kt_tab_pane_2" role="tabpanel">
-							<div class="fv-row mb-7">
-								<label class="required form-label fw-semibold">{{ __('main.province') }}</label>
-								<div data-table-filter="province">
-									<select id="province" name="province_id" class="form-select" data-dropdown-parent="#{{ $controller }}"  data-kt-select2="true" data-placeholder="{{ __('main.please_choose') }}" data-allow-clear="true">
-									<option value="">{{ __('main.please_choose') }}</option>
-									@foreach($province as $value)
-										<option value="{{ $value->id }}">{{ $value->name }}</option>
-									@endforeach
-									</select>
-								</div>
-							</div>
-
-							<div class="fv-row mb-7">
-								<label class="required form-label fw-semibold">{{ __('main.city') }}</label>
-								<div data-table-filter="city">
-									<select id="city" name="city_id" class="form-select" data-dropdown-parent="#{{ $controller }}"  data-kt-select2="true" data-placeholder="{{ __('main.please_choose') }}" data-allow-clear="true">
-									<option value="">{{ __('main.please_choose') }}</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="fv-row mb-7">
-								<label class="required form-label fw-semibold">{{ __('main.subdistrict') }}</label>
-								<div data-table-filter="subdistrict">
-									<select id="subdistrict" name="subdistrict_id" class="form-select" data-dropdown-parent="#{{ $controller }}"  data-kt-select2="true" data-placeholder="{{ __('main.please_choose') }}" data-allow-clear="true">
-									<option value="">{{ __('main.please_choose') }}</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="fv-row mb-7">
-								<label class="fs-6 fw-semibold mb-2">{{ __('main.address_line') }}</label>
-								<textarea class="form-control" rows="3" name="address_line" placeholder="{{ __('main.address_line') }}"></textarea>
-							</div>
-
-						</div>
-
-
 						<!-- Account -->
 						<div class="tab-pane" id="kt_tab_pane_3" role="tabpanel">
 							<div class="fv-row mb-7">
 								<label class="required fw-semibold fs-6 mb-2">{{ __('main.username') }}</label>
-								<input type="text" name="username" class="form-control customer- mb-3 mb-lg-0" placeholder="{{ __('main.username') }}" />
+								<input type="text" name="username" class="form-control staff- mb-3 mb-lg-0" placeholder="{{ __('main.username') }}" />
 							</div>
 							
 							<!-- password-->
@@ -243,7 +176,7 @@
 									{{ __('passwords.password') }}
 									</label>
 									<div class="position-relative mb-3">
-										<input class="form-control form-control-lg customer-" type="password" placeholder="" name="password" autocomplete="new-password"  />
+										<input class="form-control form-control-lg staff-" type="password" placeholder="" name="password" autocomplete="new-password"  />
 										<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
 											<i class="ki-duotone ki-eye-slash fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
 											<i class="ki-duotone ki-eye d-none fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
@@ -264,7 +197,7 @@
 							<!-- confirm password-->
 							<div class="fv-row mb-10">
 								<label class="form-label fw-semibold fs-6 mb-2">{{__('main.confirm')}} {{ __('passwords.password') }}</label>
-								<input class="form-control form-control-lg customer-" type="password" placeholder="" name="password_confirmation" autocomplete="off" />
+								<input class="form-control form-control-lg staff-" type="password" placeholder="" name="password_confirmation" autocomplete="off" />
 							</div>
 					</div>
 				@endsection
@@ -282,7 +215,7 @@
 	<script>
 		"use strict";
 
-		const URL_API = `{{ url('admin/customers') }}`
+		const URL_API = `{{ url('admin/staffs') }}`
 
 		// Function definition
 		function add() {
@@ -302,8 +235,6 @@
 			var avatar = path + '/images/profile/anonymous.png';
 			$('.image-input-wrapper').css('background-image', 'url(' + avatar + ')');
 
-			$("#preview_national_identity").hide();
-
 			// Show the modal
 			$('#{{ $controller  }}_trigger').modal('show');
 		}	
@@ -320,8 +251,6 @@
 			$('input[name="_method"]').val('put');
 			$('input[name="_id"]').val(id);
 			$('input[name="avatar_remove"]').val(null);
-			$("#preview_national_identity").show();
-
 
 			// Fetching data
 			$.ajax({
@@ -333,24 +262,11 @@
 						const data = response.data;
 
 						$('input[name="name"]').val(data.name);
-						$('input[name="date_of_birth"]').val(data.date_of_birth);
-						$('input[name="place_of_birth"]').val(data.place_of_birth);
 						$('input[name="email"]').val(data.email);
 						$('input[name="username"]').val(data.username);
 						
 						// Set the radio button value based on the gender value
 						$('input[name="gender"][value="' + data.gender + '"]').prop('checked', true);
-
-						// set data to location and update placeholder
-						$('select[name="province_id"]').val(data.province_id).trigger('change').attr('data-placeholder', data.province_id);
-						setTimeout(function(){
-							$('select[name="city_id"]').val(data.city_id).trigger('change').attr('data-placeholder', data.city_id);
-							$('#city').trigger('change'); // trigger change to load subdistrict data
-							setTimeout(function(){
-								$('select[name="subdistrict_id"]').val(data.subdistrict_id).trigger('change').attr('data-placeholder', data.subdistrict_id);
-							}, 500); // wait 0.5 second before setting subdistrict to ensure it is loaded
-						}, 500); // wait 0.5 second before setting city to ensure it is loaded
-						$('textarea[name="address_line"]').val(data.address_line);
 
 						// Set Image path
 						var path = `{{ config('app.url') }}`;
@@ -360,12 +276,6 @@
 						}						
 						$('.image-input-wrapper').css('background-image', 'url(' + avatar + ')');
 						
-						var nid = path + '/images/national_identity_card.png';
-						if (data.nid_relative_path != null){
-							nid = path + '/' + data.nid_relative_path; 
-						}						
-						$("#preview_national_identity").attr('src', nid);
-
 						// Show the modal
 						$('#{{ $controller  }}_trigger').modal('show');				
 					}
@@ -379,47 +289,6 @@
 			});	
 		}
 
-		$('#province').change(function () {
-            var provinceId = $(this).val();
-            if (provinceId) {
-                $.ajax({
-                    url: `{{ url('location/city') }}`+ `/` + provinceId,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (response) {
-						var data = response.data;
-                        $('#city').empty();
-						$('#city').append(`<option value="">{{ __('main.please_choose') }}</option>`);
-                        $.each(data, function (key, value) {
-                            $('#city').append('<option value="' + value.id + '">' + value.name + '</option>');
-                        });
-                    }
-                });
-            } else {
-                $('#city').empty();
-            }
-        });
-
-		$('#city').change(function () {
-            var cityId = $(this).val();
-            if (cityId) {
-                $.ajax({
-                    url: `{{ url('location/subdistrict') }}`+ `/` + cityId,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (response) {
-						var data = response.data;
-                        $('#subdistrict').empty();
-						$('#subdistrict').append(`<option value="">{{ __('main.please_choose') }}</option>`);
-                        $.each(data, function (key, value) {
-                            $('#subdistrict').append('<option value="' + value.id + '">' + value.name + '</option>');
-                        });
-                    }
-                });
-            } else {
-                $('#subdistrict').empty();
-            }
-        });
 
 		// Class definition
 		var KTDatatablesServerSide = function () {
@@ -447,7 +316,6 @@
 					columns: [
 						{ data: 'id' },
 						{ data: 'name' },
-						{ data: 'province' },
 						{ data: 'gender' },
 						{ data: 'created_at' },
 						{ data: 'updated_at' },
@@ -501,7 +369,7 @@
 							}
 						},
 						{
-							targets: 3,
+							targets: 2,
 							render: function (data, type, row) {
 								var genderArr = <?php echo json_encode(arrGender()); ?>;
         						return genderArr[row.gender];
@@ -529,7 +397,7 @@
 												<!--begin::Menu-->
 												<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 													<!--begin::Menu item-->
-													@permission('customer-edit')
+													@permission('staff-edit')
 														<div class="menu-item px-3">
 															<a href="javascript:void(0)" onclick="edit('`+ data["id"] +`')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
 																{{ __('main.edit') }}
@@ -538,7 +406,7 @@
 													@endpermission
 
 													<!--begin::Menu item-->
-													@permission('customer-delete')
+													@permission('staff-delete')
 														<div class="menu-item px-3">
 															<a href="javascript:void(0)" class="menu-link px-3" data-kt-docs-table-filter="delete_row">
 																{{ __('main.delete') }}
@@ -865,45 +733,10 @@
 									},
 								}
 							},							
-							'place_of_birth': {
-								validators: {
-									notEmpty: {
-										message: `{{ __('main.place_of_birth') }} {{ __('main.is_required') }}`
-									}
-								}
-							},
-							'date_of_birth': {
-								validators: {
-									notEmpty: {
-										message: `{{ __('main.date_of_birth') }} {{ __('main.is_required') }}`
-									}
-								}
-							},
 							'gender': {
 								validators: {
 									notEmpty: {
 										message: `{{ __('main.gender') }} {{ __('main.is_required') }}`
-									}
-								}
-							},
-							'province_id': {
-								validators: {
-									notEmpty: {
-										message: `{{ __('main.province') }} {{ __('main.is_required') }}`
-									}
-								}
-							},
-							'city_id': {
-								validators: {
-									notEmpty: {
-										message: `{{ __('main.city') }} {{ __('main.is_required') }}`
-									}
-								}
-							},
-							'subdistrict_id': {
-								validators: {
-									notEmpty: {
-										message: `{{ __('main.subdistrict') }} {{ __('main.is_required') }}`
 									}
 								}
 							},

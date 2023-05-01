@@ -12,7 +12,7 @@ use App\User;
 use App\RoleUser;
 use App\Role;
 use App\Asset;
-use App\Customer;
+use App\Staff;
 use App\Province;
 use App\Traits\RespondsWithHttpStatus;
 use Yajra\DataTables\Facades\DataTables;
@@ -35,11 +35,9 @@ class StaffController extends Controller
         if (!Auth::user()->can($this->controller.'-list')){
             return view('backend.errors.401')->with(['url' => '/admin']);
         }
-        $roles =  Role::where('roles.id','!=',1)->get();
-
         $province = Province::get();
 
-        return view('backend.'.$this->controller.'.list', compact('roles','province'))->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
+        return view('backend.'.$this->controller.'.list', compact('province'))->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
     }
 
     public function get_data(Request $request){
@@ -47,8 +45,8 @@ class StaffController extends Controller
             return $this->unauthorizedAccessModule();
         }        
 
-        $customer = new Customer;
-        $datas = $customer->get_data();
+        $staff = new Staff;
+        $datas = $staff->get_data();
 
         return DataTables::of($datas)
         ->filter(function ($query) use ($request) {
@@ -58,7 +56,7 @@ class StaffController extends Controller
                     $query->where('users.name', 'like', "%$value%")
                         ->orWhere('users.username', 'like', "%$value%")
                         ->orWhere('users.email', 'like', "%$value%")
-                        ->orWhere('customers.gender', '=', "$value");
+                        ->orWhere('staff.gender', '=', "$value");
                 });
             });
         })
@@ -72,11 +70,6 @@ class StaffController extends Controller
     public function validate_data(Request $request, $id = null){
         $rules = [
             'name' => 'required',
-            'place_of_birth' => 'required',
-            'date_of_birth' => 'required',
-            'province_id' => 'required',
-            'city_id' => 'required',
-            'subdistrict_id' => 'required',
             'email' => [
                 'required',
                 'email',
@@ -116,10 +109,6 @@ class StaffController extends Controller
         if ($avatar['status'] == 'error') {
             return $this->badRequest($avatar['message']);
         }
-        $nid = Asset::upload($request->file('national_identity_document'), "national_identity");
-        if ($nid['status'] == 'error') {
-            return $this->badRequest($nid['message']);
-        }
         
         $data = $request->all();
         if (!empty($avatar['data'])) {
@@ -131,22 +120,13 @@ class StaffController extends Controller
         
         $role_user = new RoleUser;
         $role_user->user_id = $user->id;
-        $role_user->role_id = 4;
+        $role_user->role_id = 3;
         $role_user->save();
 
-        $customer = new Customer;
-        if (!empty($nid['data'])) {
-            $customer->national_identity_asset_id = $nid['data']->id;
-        }
-        $customer->user_id = $user->id;
-        $customer->place_of_birth = $request->place_of_birth;
-        $customer->date_of_birth = $request->date_of_birth;
-        $customer->gender = $request->gender;
-        $customer->province_id = $request->province_id;
-        $customer->city_id = $request->city_id;
-        $customer->subdistrict_id = $request->subdistrict_id;
-        $customer->address_line = $request->address_line;
-        $customer->save();
+        $staff = new Staff;
+        $staff->user_id = $user->id;
+        $staff->gender = $request->gender;
+        $staff->save();
 
         return $this->created($user, null);
     }
@@ -156,12 +136,12 @@ class StaffController extends Controller
             return $this->unauthorizedAccessModule();
         }       
         
-        $customer = Customer::find($id);
-        if(!$customer){
+        $staff = Staff::find($id);
+        if(!$staff){
             return $this->errorNotFound(null);
         }     
         
-        $user = User::find($customer->user_id);
+        $user = User::find($staff->user_id);
         if(!$user){
             return $this->errorNotFound(null);
         }  
@@ -197,21 +177,8 @@ class StaffController extends Controller
         $user->username = $request->username;
         $user->save();   
 
-        $nid = Asset::upload($request->file('national_identity_document'), "national_identity", $customer->national_identity_asset_id);
-        if ($nid['status'] == 'error') {
-            return $this->badRequest($nid['message']);
-        }
-        if (!empty($nid['data'])) {
-            $customer->national_identity_asset_id = $nid['data']->id;
-        }
-        $customer->place_of_birth = $request->place_of_birth;
-        $customer->date_of_birth = $request->date_of_birth;
-        $customer->gender = $request->gender;
-        $customer->province_id = $request->province_id;
-        $customer->city_id = $request->city_id;
-        $customer->subdistrict_id = $request->subdistrict_id;
-        $customer->address_line = $request->address_line;
-        $customer->save();
+        $staff->gender = $request->gender;
+        $staff->save();
 
         return $this->ok($user, null);
     }
@@ -221,8 +188,8 @@ class StaffController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
-        $customer = new Customer;
-        $datas = $customer->get_data();
+        $staff = new Staff;
+        $datas = $staff->get_data();
 
         $res = $datas->find($id);
         if($res == null){
@@ -236,21 +203,18 @@ class StaffController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
-        $customer = Customer::find($id);
-        if (!$customer) {
+        $staff = Staff::find($id);
+        if (!$staff) {
             return $this->errorNotFound(null);
         }     
-        $user = User::find($customer->user_id);
+        $user = User::find($staff->user_id);
         if (!$user) {
             return $this->errorNotFound(null);
         }
         if (!empty($user->asset_id)) {
             Asset::remove($user->asset_id);
         }
-        if (!empty($customer->national_identity_asset_id)) {
-            Asset::remove($customer->national_identity_asset_id);
-        }
-        $customer->delete();
+        $staff->delete();
         $user->delete();
 
         return $this->deleted("Data deleted successfully");
@@ -263,21 +227,18 @@ class StaffController extends Controller
     
         $ids = $request->input('id');
         foreach ($ids as $id) {
-            $customer = Customer::find($id);
-            if (!$customer) {
+            $staff = Staff::find($id);
+            if (!$staff) {
                 return $this->errorNotFound(null);
             }     
-            $user = User::find($customer->user_id);
+            $user = User::find($staff->user_id);
             if (!$user) {
                 return $this->errorNotFound(null);
             }
             if (!empty($user->asset_id)) {
                 Asset::remove($user->asset_id);
             }
-            if (!empty($customer->national_identity_asset_id)) {
-                Asset::remove($customer->national_identity_asset_id);
-            }
-            $customer->delete();
+            $staff->delete();
             $user->delete();
         }
     

@@ -35,11 +35,9 @@ class CustomersController extends Controller
         if (!Auth::user()->can($this->controller.'-list')){
             return view('backend.errors.401')->with(['url' => '/admin']);
         }
-        $roles =  Role::where('roles.id','!=',1)->get();
-
         $province = Province::get();
 
-        return view('backend.'.$this->controller.'.list', compact('roles','province'))->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
+        return view('backend.'.$this->controller.'.list', compact('province'))->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
     }
 
     public function get_data(Request $request){
