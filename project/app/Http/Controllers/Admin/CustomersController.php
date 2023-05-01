@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
-use App\Sample;
 use App\User;
 use App\RoleUser;
 use App\Role;
@@ -17,7 +16,6 @@ use App\Customer;
 use App\Province;
 use App\Traits\RespondsWithHttpStatus;
 use Yajra\DataTables\Facades\DataTables;
-
 
 class CustomersController extends Controller
 {
@@ -60,15 +58,9 @@ class CustomersController extends Controller
                     $query->where('users.name', 'like', "%$value%")
                         ->orWhere('users.username', 'like', "%$value%")
                         ->orWhere('users.email', 'like', "%$value%")
-                        ->orWhere('users.status', 'like', "%$value%");
-                        // ->orWhereHas('roles', function ($q) use ($value) {
-                        //     $q->where('display_name', 'like', "%{$value}%");
-                        // });
+                        ->orWhere('customers.gender', '=', "$value");
                 });
             });
-            // if (Auth::user()->role_id != 1) {
-            //     $query->where('users.role_id', '!=', 1);
-            // }
         })
         ->addColumn('action', function ($data) {
             // add your action column logic here

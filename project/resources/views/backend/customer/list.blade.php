@@ -34,23 +34,23 @@
 								<!--begin::Input group-->
 								<div class="mb-10">
 									<!--begin::Label-->
-									<label class="form-label fs-5 fw-semibold mb-3">Status:</label>
+									<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.gender') }}</label>
 									<!--begin::Options-->
-									<div class="d-flex flex-column flex-wrap fw-semibold" data-kt-docs-table-filter="status">
+									<div class="d-flex flex-column flex-wrap fw-semibold" data-kt-docs-table-filter="gender">
 										<!--begin::Option-->
 										<label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-											<input class="form-check-input" type="radio" name="status" value="all" checked="checked" />
+											<input class="form-check-input" type="radio" name="gender" value="all" checked="checked" />
 											<span class="form-check-label text-gray-600">{{ __('main.all') }}</span>
 										</label>
 										<!--begin::Option-->
 										<label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-											<input class="form-check-input" type="radio" name="status" value="0" />
-											<span class="form-check-label text-gray-600">{{ __('main.active') }}</span>
+											<input class="form-check-input" type="radio" name="gender" value="male" />
+											<span class="form-check-label text-gray-600">{{ __('main.male') }}</span>
 										</label>
 										<!--begin::Option-->
 										<label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
-											<input class="form-check-input" type="radio" name="status" value="1" />
-											<span class="form-check-label text-gray-600">{{ __('main.non-active') }}</span>
+											<input class="form-check-input" type="radio" name="gender" value="female" />
+											<span class="form-check-label text-gray-600">{{ __('main.female') }}</span>
 										</label>
 									</div>
 								</div>
@@ -83,7 +83,8 @@
 								</div>
 							</th>
 							<th>{{ __('main.users') }}</th>
-							<th>{{ __('main.role') }}</th>
+							<th>Alamat</th>
+							<th>{{ __('main.gender') }}</th>
 							<th>{{ __('main.created_date') }}</th>
 							<th>{{ __('main.updated_date') }}</th>
 							<th class="text-end min-w-100px">{{__('main.action')}}</th>
@@ -277,7 +278,6 @@
 
 		const URL_API = `{{ url('admin/customers') }}`
 
-		
 		// Function definition
 		function add() {
 			// Reset the form
@@ -406,13 +406,12 @@
             }
         });
 
-
 		// Class definition
 		var KTDatatablesServerSide = function () {
 			// Shared variables
 			var table;
 			var dt;
-			var filterStatus;
+			var filterGender;
 
 			// Private functions
 			var initDatatable = function () {
@@ -433,7 +432,8 @@
 					columns: [
 						{ data: 'id' },
 						{ data: 'name' },
-						{ data: 'display_name' },
+						{ data: 'province' },
+						{ data: 'gender' },
 						{ data: 'created_at' },
 						{ data: 'updated_at' },
 						{ data: null },
@@ -483,6 +483,13 @@
 										</div>`;
 
 								return html;
+							}
+						},
+						{
+							targets: 3,
+							render: function (data, type, row) {
+								var genderArr = <?php echo json_encode(arrGender()); ?>;
+        						return genderArr[row.gender];
 							}
 						},
 						{
@@ -557,28 +564,28 @@
 			// Filter Datatable
 			var handleFilterDatatable = () => {
 				// Select filter options
-				filterStatus = document.querySelectorAll('[data-kt-docs-table-filter="status"] [name="status"]');
+				filterGender = document.querySelectorAll('[data-kt-docs-table-filter="gender"] [name="gender"]');
 				const filterButton = document.querySelector('[data-kt-docs-table-filter="filter"]');
 
 				// Filter datatable on submit
 				filterButton.addEventListener('click', function () {
 					// Get filter values
-					let statusValue = '';
+					let genderValue = '';
 
 					// Get status value
-					filterStatus.forEach(r => {
+					filterGender.forEach(r => {
 						if (r.checked) {
-							statusValue = r.value;
+							genderValue = r.value;
 						}
 
 						// Reset status value if "All" is selected
-						if (statusValue === 'all') {
-							statusValue = '';
+						if (genderValue === 'all') {
+							genderValue = '';
 						}
 					});
 
 					// Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-					dt.search(statusValue).draw();
+					dt.search(genderValue).draw();
 				});
 			}
 
@@ -661,7 +668,7 @@
 				// Reset datatable
 				resetButton.addEventListener('click', function () {
 					// Reset status type
-					filterStatus[0].checked = true;
+					filterGender[0].checked = true;
 
 					// Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
 					dt.search('').draw();

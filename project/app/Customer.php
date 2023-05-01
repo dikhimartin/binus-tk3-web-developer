@@ -58,9 +58,6 @@ class Customer extends Model
             'nid.absolute_path as nid_absolute_path',
             'nid.relative_path as nid_relative_path',
             'nid.file_name as nid_name',
-            'roles.display_name',
-            'roles.description',
-            'role_user.role_id',
             'customers.created_at',
             'customers.updated_at')
         ->leftjoin('users', 'users.id', '=', 'customers.user_id')
@@ -68,9 +65,7 @@ class Customer extends Model
         ->leftjoin('assets as nid', 'customers.national_identity_asset_id', '=', 'nid.id')
         ->join('provinces', 'customers.province_id', '=', 'provinces.id')
         ->join('cities', 'customers.city_id', '=', 'cities.id')
-        ->leftjoin('subdistricts', 'customers.subdistrict_id', '=', 'subdistricts.id')
-        ->leftjoin('role_user', 'users.id', '=', 'role_user.user_id')
-        ->leftjoin('roles', 'role_user.role_id', '=', 'roles.id');
+        ->leftjoin('subdistricts', 'customers.subdistrict_id', '=', 'subdistricts.id');
         return $data;
     }
 

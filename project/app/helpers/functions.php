@@ -9,5 +9,5 @@
     }
 
     function arrGender() {
-        return array('L' => __('main.male'), 'P' => __('main.female'));
+        return array('male' => __('main.male'), 'female' => __('main.female'));
     }
