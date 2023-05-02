@@ -119,6 +119,14 @@ return [
     'staff_list' => 'Daftar Staff',
 
     // Product Type
-    'product-type' => 'Jenis Produk',
-    'product-type_list' => 'Daftar Jenis Produk',
+    'product-type' => 'Jenis Barang',
+    'product-type_list' => 'Daftar Jenis Barang',
+
+    // Product
+    'product' => 'Barang',
+    'product_image' => 'Gambar Barang',
+    'product_list' => 'Daftar Barang',
+    'purchase_price' => 'Harga Beli',
+    'selling_price' => 'Harga Jual',
+    'stock' => 'Stok',
 ];

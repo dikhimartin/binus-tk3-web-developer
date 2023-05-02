@@ -192,9 +192,10 @@ class StaffController extends Controller
         $datas = $staff->get_data();
 
         $res = $datas->find($id);
-        if($res == null){
+        if(!$res){
             return $this->errorNotFound(null);
-        }        
+        }    
+            
         return $this->ok($res, null);
     }
 

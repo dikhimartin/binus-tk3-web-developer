@@ -64,8 +64,8 @@
                     </div>
                 @endif
 
-                 @if ($user->can('product-type-list') || $user->can('customer-list') || $user->can('staff-list') )
-                    <div data-kt-menu-trigger="click" class="menu-item {{ in_array($sidebarActive, ['product-type','customer', 'staff']) ? 'here show menu-accordion' : '' }}">
+                 @if ($user->can('product-type-list') || $user->can('product-list') || $user->can('customer-list') || $user->can('staff-list') )
+                    <div data-kt-menu-trigger="click" class="menu-item {{ in_array($sidebarActive, ['product','product-type','customer', 'staff']) ? 'here show menu-accordion' : '' }}">
                         <!--begin:Menu link-->
                         <span class="menu-link ">
                             <span class="menu-icon">
@@ -90,6 +90,19 @@
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">{{ __('main.product-type') }}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                        <!--begin:Menu sub-->
+                        @if ($user->can('product-list'))
+                            <div class="menu-sub menu-sub-accordion">
+                                <div class="menu-item">
+                                    <a class="menu-link {!! $sidebarActive == 'product' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/product' ))}}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">{{ __('main.product') }}</span>
                                     </a>
                                 </div>
                             </div>

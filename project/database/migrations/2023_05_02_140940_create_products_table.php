@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->uuid('asset_id')->index()->nullable(true);
             $table->string('name');
             $table->text('description')->nullable(true);
-            $table->integer('stock');
+            $table->integer('stock')->nullable(true);
             $table->decimal('purchase_price', 10, 2);
             $table->decimal('selling_price', 10, 2);
             $table->integer('status');

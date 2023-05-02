@@ -164,7 +164,6 @@ class CustomersController extends Controller
             return $this->errorNotFound(null);
         }  
         
-        
         $validator = $this->validate_data($request, $user->id);
         if ($validator->fails()) {
             return $this->badRequest($validator->errors());

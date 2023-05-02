@@ -135,7 +135,6 @@
 								<div class="text-primary">{{ __('main.info_image_pixels', ['value' => "150 x 150"]) }}</div>
 							</div>
 							
-							
 							<div class="fv-row mb-7">
 								<label class="d-block fw-semibold fs-6 mb-5">KTP (Kartu tanda penduduk)</label>
 								<input type="file" class="dropzone" name="national_identity_document">
@@ -1057,8 +1056,6 @@
 					});
 				}				
 			}
-
-
 
 			return {
 				// Public functions
