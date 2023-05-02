@@ -129,4 +129,8 @@ return [
     'purchase_price' => 'Harga Beli',
     'selling_price' => 'Harga Jual',
     'stock' => 'Stok',
+
+    // Transaction
+    'transaction' => 'Penjualan',
+    'transaction_list' => 'Daftar Penjualan',
 ];

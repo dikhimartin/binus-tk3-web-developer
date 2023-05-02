@@ -140,6 +140,19 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::put('/products/{id}','ProductController@update');
 	Route::delete('/products/{id}','ProductController@delete');
 	Route::post('/products/delete/batch','ProductController@delete_batch');
+	
+	/*
+	 |--------------------------------------------------------------------------
+	 | Module transaction
+	 |--------------------------------------------------------------------------
+	*/	
+	Route::get('/transaction','TransactionController@index');
+	Route::get('/transactions','TransactionController@get_data');
+	Route::get('/transactions/{id}','TransactionController@detail');
+	Route::post('/transactions','TransactionController@create');
+	Route::put('/transactions/{id}','TransactionController@update');
+	Route::delete('/transactions/{id}','TransactionController@delete');
+	Route::post('/transactions/delete/batch','TransactionController@delete_batch');
 
 });
 
