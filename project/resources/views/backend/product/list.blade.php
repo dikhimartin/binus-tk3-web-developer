@@ -100,6 +100,10 @@
 			<!--begin::Modal Component-->
 			@component('backend.components.form-modal', ['modal_size' => 'modal-lg', 'modal_id' => $controller])
 				@section('form_modal')
+					<div class="fv-row mb-7">
+						<img style="display:none;" id="preview_product_asset" class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded" height="300" width="300"
+						src="{{ URL::asset('images/product.png') }}" >
+					</div>
 					<!--begin::Input group-->
 					<div class="fv-row mb-7">
 						<label class="d-block fw-semibold fs-6 mb-5">{{ __('main.product_image') }}</label>
@@ -108,10 +112,6 @@
 						<div class="text-primary">{{ __('main.info_image_pixels', ['value' => "100 x 100"]) }}</div>
 					</div>
 
-					<div class="fv-row mb-7">
-						<img style="display:none;" id="preview_product_asset" class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded" height="100" width="100"
-						src="{{ URL::asset('images/product.png') }}" >
-					</div>
 
 					<div class="fv-row mb-7">
 						<label class="required fs-6 fw-semibold mb-2">{{ __('main.name') }}</label>
@@ -283,7 +283,10 @@
 					},
 					columns: [
 						{ data: 'id' },
-						{ data: 'name' },
+						{ 
+							data: 'name',
+							width: '30%' 
+						},
 						{ data: 'purchase_price' },
 						{ data: 'selling_price' },
 						{ data: 'stock' },
@@ -321,7 +324,7 @@
 								}
 
 								var html = `<div class="symbol symbol-50px overflow-hidden me-3">
-									<a href="javascript:void(0)">
+									<a href="javascript:void(0)" `+ action +`>
 										<div class="symbol-label">
 											<img src="`+ product_assets +`" alt="`+ row.name +`" class="w-100">
 										</div>
