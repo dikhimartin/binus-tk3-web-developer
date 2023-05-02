@@ -9,7 +9,6 @@ use App\Sample;
 use App\Traits\RespondsWithHttpStatus;
 use Yajra\DataTables\Facades\DataTables;
 
-
 class TransactionController extends Controller
 {
     use RespondsWithHttpStatus;

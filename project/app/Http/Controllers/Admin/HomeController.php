@@ -8,6 +8,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use PeterColes\Countries\CountriesFacade;
 use DB;
 use App\User;
+use App\Product;
 use Illuminate\Support\Facades\Auth;
 use Zizaco\Entrust\EntrustFacade as Entrust;
 
@@ -34,8 +35,9 @@ class HomeController extends Controller
       $datas = $user->get_data();
       $data_user = $datas->find(Auth::user()->id);
 
-      return view('backend.home',compact('controller','page_active','pages_title','data_user'));
+      $product = new Product;
+      $products = $product->get_data()->get();
+
+      return view('backend.home',compact('controller','page_active','pages_title','data_user','products'));
     }
-
-
 }

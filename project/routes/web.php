@@ -20,6 +20,9 @@ Route::prefix('location')->group(function () {
     Route::get('village/{subdistrict_id}', 'LocationController@village');
 });
 
+Route::group(array('prefix' => LaravelLocalization::setLocale() . '/api', 'namespace' => 'Api'), function () {
+	Route::get('/products','ProductController@get_data');
+});
 
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'namespace' => 'Admin'), function () {
 
