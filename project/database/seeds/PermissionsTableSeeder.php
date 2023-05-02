@@ -195,7 +195,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 21,
-                'name' => 'stuff-list',
+                'name' => 'product-list',
                 'display_name' => 'Daftar Barang',
                 'description' => 'Daftar Barang',
                 'sort' => 1,
@@ -204,7 +204,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 22,
-                'name' => 'stuff-create',
+                'name' => 'product-create',
                 'display_name' => 'Tambah Barang',
                 'description' => 'Tambah Barang',
                 'sort' => 1,
@@ -213,7 +213,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 23,
-                'name' => 'stuff-edit',
+                'name' => 'product-edit',
                 'display_name' => 'Ubah Barang',
                 'description' => 'Ubah Barang',
                 'sort' => 1,
@@ -222,7 +222,7 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 24,
-                'name' => 'stuff-delete',
+                'name' => 'product-delete',
                 'display_name' => 'Hapus Barang',
                 'description' => 'Hapus Barang',
                 'sort' => 1,
@@ -231,6 +231,43 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 25,
+                'name' => 'product-type-list',
+                'display_name' => 'Daftar Jenis Barang',
+                'description' => 'Daftar Jenis Barang',
+                'sort' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'id' => 26,
+                'name' => 'product-type-create',
+                'display_name' => 'Tambah Jenis Barang',
+                'description' => 'Tambah Jenis Barang',
+                'sort' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'id' => 27,
+                'name' => 'product-type-edit',
+                'display_name' => 'Ubah Jenis Barang',
+                'description' => 'Ubah Jenis Barang',
+                'sort' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'id' => 28,
+                'name' => 'product-type-delete',
+                'display_name' => 'Hapus Jenis Barang',
+                'description' => 'Hapus Jenis Barang',
+                'sort' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+            [
+                'id' => 29,
                 'name' => 'transaction-list',
                 'display_name' => 'Daftar Penjualan',
                 'description' => 'Daftar Penjualan',
@@ -239,7 +276,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'id' => 26,
+                'id' => 30,
                 'name' => 'transaction-create',
                 'display_name' => 'Tambah Penjualan',
                 'description' => 'Tambah Penjualan',
@@ -248,7 +285,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'id' => 27,
+                'id' => 31,
                 'name' => 'transaction-edit',
                 'display_name' => 'Ubah Penjualan',
                 'description' => 'Ubah Penjualan',
@@ -257,7 +294,7 @@ class PermissionsTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             [
-                'id' => 28,
+                'id' => 32,
                 'name' => 'transaction-delete',
                 'display_name' => 'Hapus Penjualan',
                 'description' => 'Hapus Penjualan',

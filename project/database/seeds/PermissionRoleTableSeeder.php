@@ -41,6 +41,10 @@ class PermissionRoleTableSeeder extends Seeder
             [26, 1],
             [27, 1],
             [28, 1],
+            [29, 1],
+            [30, 1],
+            [31, 1],
+            [32, 1],
             // add new role here 
             [1, 2],
             [5, 2],

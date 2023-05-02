@@ -81,6 +81,7 @@ return [
     'address_line' => 'Alamat Lengkap',
     'not_valid_email' => 'Email tidak vaild',
     'please_choose' => 'Silahkan memilih',
+    'master_data' => 'Master Data',
 
     // Profile
     'profile' =>'Profil saya',
@@ -116,4 +117,8 @@ return [
     // Staff
     'staff' => 'Staff',
     'staff_list' => 'Daftar Staff',
+
+    // Product Type
+    'product-type' => 'Jenis Produk',
+    'product-type_list' => 'Daftar Jenis Produk',
 ];

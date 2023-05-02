@@ -114,6 +114,19 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::put('/staffs/{id}','StaffController@update');
 	Route::delete('/staffs/{id}','StaffController@delete');
 	Route::post('/staffs/delete/batch','StaffController@delete_batch');
+	
+	/*
+	 |--------------------------------------------------------------------------
+	 | Module product Type
+	 |--------------------------------------------------------------------------
+	*/	
+	Route::get('/product-type','ProductTypeController@index');
+	Route::get('/product-types','ProductTypeController@get_data');
+	Route::get('/product-types/{id}','ProductTypeController@detail');
+	Route::post('/product-types','ProductTypeController@create');
+	Route::put('/product-types/{id}','ProductTypeController@update');
+	Route::delete('/product-types/{id}','ProductTypeController@delete');
+	Route::post('/product-types/delete/batch','ProductTypeController@delete_batch');
 
 });
 
