@@ -134,14 +134,14 @@
             });
         };
 
-        // attach event listener to search query input
-        $('#search-query').on('input', handleSearchQuery);
-
         // define function to handle search query input
         const handleSearchQuery = () => {
             searchQuery = $('#search-query').val();
             getProductList();
         };
+
+        // attach event listener to search query input
+        $('#search-query').on('input', handleSearchQuery);
 
         function add_to_cart(element){
             // Get data
