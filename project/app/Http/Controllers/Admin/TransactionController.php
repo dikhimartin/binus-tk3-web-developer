@@ -83,8 +83,8 @@ class TransactionController extends Controller
             return $this->errorNotFound(null);
         }
         $res->delete();
-        TransactionDetail::whereIn('transaction_id', $id)->delete();
-        
+        TransactionDetail::where('transaction_id', $id)->delete();
+
         return $this->deleted("Data deleted successfully");
     }
 
