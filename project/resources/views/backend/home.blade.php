@@ -31,7 +31,7 @@
                 <div class="row d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
                     <div class="col-md-12 ">
                         <div class="input-group mb-8">
-                            <input type="text" id="search-query" class="form-control" placeholder="Search Product">
+                            <input type="text" id="search-query" class="form-control" placeholder="{{__('main.search')}} {{__('main.product')}}">
                         </div>
                         <div id="product-list-container" class="row"></div>
                     </div>
@@ -95,9 +95,12 @@
         const getProductList = () => {
             axios.get('/api/products', {
                 params: {
-                    search: searchQuery,
+                    draw: 1,
+                    start: 0,
+                    length: 10,
+                    'search[value]': searchQuery,
                     filter: filterType
-                }
+                },
             })
             .then(response => {
                 // remove previous product cards from the container
@@ -127,6 +130,18 @@
                 $('#product-list-container').html('<p>Product not available.</p>');
             });
         };
+
+
+        // define function to handle search query input
+        const handleSearchQuery = () => {
+            searchQuery = $('#search-query').val();
+            console.log(searchQuery);
+            getProductList();
+        };
+
+        // attach event listener to search query input
+        $('#search-query').on('input', handleSearchQuery);
+
 
         function add_to_cart(element){
             // Get data

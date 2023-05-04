@@ -82,6 +82,7 @@ return [
     'not_valid_email' => 'Email tidak vaild',
     'please_choose' => 'Silahkan memilih',
     'master_data' => 'Master Data',
+    'search' => 'Cari',
 
     // Profile
     'profile' =>'Profil saya',
