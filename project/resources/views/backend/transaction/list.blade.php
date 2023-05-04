@@ -176,6 +176,30 @@
 			});	
 		}
 
+		function update_status(id, status) {
+			$.ajax({
+				url: `transactions/${id}/update_status`,
+				type: "PUT",
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				data: {
+					status: status,
+					_method: 'PUT' // tambahkan _method dengan nilai PUT
+				},
+				dataType: "JSON",
+				success: function(response) {
+					KTDatatablesServerSide.refresh();
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					if (jqXHR.responseJSON.status.message != undefined) {
+						errorThrown = jqXHR.responseJSON.status.message;
+					}
+					ToastrError(errorThrown);
+				}
+			});
+		}
+
 		// Class definition
 		var KTDatatablesServerSide = function () {
 			// Shared variables
@@ -251,7 +275,7 @@
 										<!--begin::Menu item-->
 										@permission('transaction-edit')
 											<div class="menu-item px-3">
-												<a href="javascript:void(0)" onclick="edit('`+ data["id"] +`')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+												<a href="javascript:void(0)" onclick="update_status('${data["id"]}', 'reject')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
 													{{ __('main.reject') }}
 												</a>
 											</div>
@@ -259,7 +283,7 @@
 
 										@permission('transaction-edit')
 											<div class="menu-item px-3">
-												<a href="javascript:void(0)" onclick="edit('`+ data["id"] +`')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+												<a href="javascript:void(0)" onclick="update_status('${data["id"]}', 'finish')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
 													{{ __('main.finish') }}
 												</a>
 											</div>

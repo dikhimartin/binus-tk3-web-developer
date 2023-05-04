@@ -73,6 +73,19 @@ class TransactionController extends Controller
         return $this->ok($res, null);
     }
 
+    public function update_status(Request $request, $id){
+        if (!Auth::user()->can($this->controller.'-edit')){
+            return $this->unauthorizedAccessModule();
+        }  
+        $res = Transaction::find($id);
+        if(!$res){
+            return $this->errorNotFound(null);
+        }
+        $res->status_transaction = $request->status;
+        $res->save();        
+        return $this->ok($res, null);        
+    }
+
     public function delete($id){
         if (!Auth::user()->can($this->controller.'-delete')){
             return $this->unauthorizedAccessModule();
