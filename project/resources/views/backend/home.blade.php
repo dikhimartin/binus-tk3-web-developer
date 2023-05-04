@@ -56,7 +56,7 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody id="item-cart"> </tbody>
+                                    <tbody id="item-cart"></tbody>
                                 </table>
                             </div>
                             
@@ -65,7 +65,7 @@
                                     <span class="d-block fs-2qx lh-1">Total</span>
                                 </div>
                                 <div class="fs-6 fw-bold text-white text-end">
-                                    <span class="d-block fs-2qx lh-1" data-kt-pos-element="grant-total">Rp 16.000</span>
+                                    <span class="d-block fs-2qx lh-1" id="grant-total"></span>
                                 </div>
                             </div>
                             <div class="m-0">
@@ -99,7 +99,6 @@
                 timeoutId = setTimeout(() => func.apply(this, args), delay);
             };
         }
-
 
         // define function to get product list from API
         const getProductList = () => {
@@ -175,7 +174,9 @@
             }
 
             let item = `
-                <tr data-kt-pos-element="item" data-id="${product_id}">
+                <tr data-id="${product_id}">
+                    <input type="hidden" name="product_id[]" value="${product_id}">
+                    <input  id="product_price_${product_id}" type="hidden" name="product_price[]" value="${parseInt(product_price)}">
                     <td class="pe-0">
                         <div class="d-flex align-items-center">
                         <img src="${product_image}" class="w-50px h-50px rounded-3 me-3" alt="">
@@ -187,26 +188,26 @@
                             <button class="btn btn-sm btn-outline-secondary" onclick="decreased_qty('${product_id}')" type="button" data-quantity="minus" data-field="quantity">
                                 <i class="fa fa-duotone fa-minus"></i>
                             </button>
-                            <input type="text" id="quantity_${product_id}" onkeyup="input_qty('${product_id}')" name="quantity" class="form-control input-number text-center" value="1" min="1" max="${product_stock}">
+                            <input type="text" id="quantity_${product_id}" onkeyup="input_qty('${product_id}')" name="quantity[]" class="form-control input-number text-center" value="1" min="1" max="${product_stock}">
                             <button class="btn btn-sm btn-outline-secondary" onclick="increased_qty('${product_id}')" type="button" data-quantity="plus" data-field="quantity">
                                 <i class="fa fa-duotone fa-plus"></i>
                             </button>
                         </div>
                     </td>
                     <td class="text-end">
-                        <span class="fw-bold text-primary fs-2" price="${product_price}" >${formated_price}</span>
+                        <span class="fw-bold text-primary fs-2" id="sub_price_${product_id}" data-sub-price="${product_price}" >${formated_price}</span>
                     </td>
                     <td class="text-end">
                         <a href="javascript:void(0)" onclick=remove_item('${product_id}') class="btn btn-sm btn-danger">x
                         </a>
                     </td>
-
                 </tr>
             `;
             // Add highlight to the corresponding div
             $(`#hightlight_id_${product_id}`).addClass('bg-primary text-white');
 
             $("#item-cart").append(item);
+            accumulate_grand_total();
         }
 
         function remove_item(id){
@@ -220,6 +221,7 @@
             item.empty();
             $('.card-hightlight').removeClass('bg-primary text-white');
         }
+
         function increased_qty(id){
             var $input = $("#quantity_"+id);
             var quantity = parseInt($input.val());
@@ -228,6 +230,7 @@
             if (quantity < quantityMax) {
                 $input.val(quantity + 1).trigger('change');
             }
+            sub_total(id);
         }
         
         function decreased_qty(id){
@@ -238,6 +241,7 @@
             if (quantity > quantityMin) {
                 $input.val(quantity - 1).trigger('change');
             }
+            sub_total(id);
         }
 
         function input_qty(id){
@@ -260,7 +264,30 @@
             }
 
             $input.val(quantity);
+            sub_total(id);
         }
+
+        function sub_total(id){
+            var $element = $("#sub_price_"+id);
+            var quantity = parseInt($("#quantity_"+id).val());
+            var pricePerProduct = parseInt($("#product_price_"+id).val());
+            var sub_total = (quantity *  pricePerProduct);
+
+            $element.attr('data-sub-price', sub_total);
+            $element.text(IDRCurrency(sub_total));
+            accumulate_grand_total();
+        }
+
+        function accumulate_grand_total(){
+            let totalPrice = 0;
+            let subPrices = document.querySelectorAll('#item-cart [data-sub-price]');
+            subPrices.forEach(function(subPrice) {
+                totalPrice += parseInt(subPrice.dataset.subPrice);
+            });
+            $("#grant-total").text(IDRCurrency(totalPrice));
+        }
+
+
 
     </script>
 @endpush
