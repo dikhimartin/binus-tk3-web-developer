@@ -105,6 +105,9 @@
             .then(response => {
                 // remove previous product cards from the container
                 $('#product-list-container').empty();
+                if(response.data.data.length === 0) {
+                    $('#product-list-container').html('<p>No products found.</p>');
+                }
                 // loop through the product data and add new cards to the container
                 response.data.data.forEach(product => {
                     var formatted_price = IDRCurrency(product.selling_price);
@@ -131,17 +134,14 @@
             });
         };
 
+        // attach event listener to search query input
+        $('#search-query').on('input', handleSearchQuery);
 
         // define function to handle search query input
         const handleSearchQuery = () => {
             searchQuery = $('#search-query').val();
-            console.log(searchQuery);
             getProductList();
         };
-
-        // attach event listener to search query input
-        $('#search-query').on('input', handleSearchQuery);
-
 
         function add_to_cart(element){
             // Get data
