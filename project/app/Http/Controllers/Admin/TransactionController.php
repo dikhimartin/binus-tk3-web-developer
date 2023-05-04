@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Customer;
-use App\Sample;
 use App\Transaction;
+use App\TransactionDetail;
 use App\Traits\RespondsWithHttpStatus;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -79,11 +78,12 @@ class TransactionController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
-        $res = Sample::find($id);
+        $res = Transaction::find($id);
         if (!$res) {
             return $this->errorNotFound(null);
         }
         $res->delete();
+        TransactionDetail::whereIn('transaction_id', $id)->delete();
         
         return $this->deleted("Data deleted successfully");
     }
@@ -94,7 +94,9 @@ class TransactionController extends Controller
         }  
 
         $ids = $request->input('id');
-        Sample::whereIn('id', $ids)->delete();
+        Transaction::whereIn('id', $ids)->delete();
+        TransactionDetail::whereIn('transaction_id', $ids)->delete();
+
         return $this->deleted("Data deleted successfully");
     }
 
