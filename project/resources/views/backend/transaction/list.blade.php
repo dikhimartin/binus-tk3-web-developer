@@ -273,18 +273,19 @@
 									<!--begin::Menu-->
 									<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 										<!--begin::Menu item-->
-										@permission('transaction-edit')
-											<div class="menu-item px-3">
-												<a href="javascript:void(0)" onclick="update_status('${data["id"]}', 'reject')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
-													{{ __('main.reject') }}
-												</a>
-											</div>
-										@endpermission
 
 										@permission('transaction-edit')
 											<div class="menu-item px-3">
 												<a href="javascript:void(0)" onclick="update_status('${data["id"]}', 'finish')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
 													{{ __('main.finish') }}
+												</a>
+											</div>
+										@endpermission
+										
+										@permission('transaction-edit')
+											<div class="menu-item px-3">
+												<a href="javascript:void(0)" onclick="update_status('${data["id"]}', 'reject')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+													{{ __('main.reject') }}
 												</a>
 											</div>
 										@endpermission
