@@ -57,5 +57,25 @@ class Transaction extends Model
             }
         });
     }
+
+    // Query Builder version
+    public function get_data(){
+        $data = Transaction::select(
+            'transactions.id',
+            'transactions.customer_id',
+            'transactions.staff_id',
+            'user_customer.name as customer_name',
+            'user_staff.name as staff_name',
+            'transactions.transaction_date',
+            'transactions.description',
+            'transactions.status_transaction',
+            'transactions.created_at',
+            'transactions.updated_at')
+        ->leftjoin('customers', 'transactions.customer_id', '=', 'customers.id')
+        ->leftjoin('users as user_customer', 'customers.user_id', '=', 'user_customer.id')
+        ->leftjoin('staff', 'transactions.staff_id', '=', 'staff.id')
+        ->leftjoin('users as user_staff', 'staff.user_id', '=', 'user_staff.id');
+        return $data;
+    }
 }
 

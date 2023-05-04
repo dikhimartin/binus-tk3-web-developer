@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
+use Illuminate\Support\Facades\Auth;
 
 class Customer extends Model
 {
@@ -68,6 +69,12 @@ class Customer extends Model
         ->leftjoin('subdistricts', 'customers.subdistrict_id', '=', 'subdistricts.id');
         return $data;
     }
+
+    public function get_customer_id(){
+        $customerId = Customer::select()->where("user_id", Auth::user()->id)->pluck("id")->first();
+        return $customerId;
+    } 
+
 
     public function user(){
         return $this->belongsTo(User::class);

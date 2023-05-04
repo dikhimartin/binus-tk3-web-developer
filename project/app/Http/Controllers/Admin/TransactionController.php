@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Customer;
 use App\Sample;
+use App\Transaction;
 use App\Traits\RespondsWithHttpStatus;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -36,47 +38,24 @@ class TransactionController extends Controller
             return $this->unauthorizedAccessModule();
         }        
 
-        return DataTables::of(Sample::query())
-            ->filter(function ($query) use ($request) {
-                if ($request->has('search.value')) {
-                    $query->where(function ($query) use ($request) {
-                        $value = $request->input('search.value');
-                        $query->where('name', 'like', "%$value%")
-                            ->orWhere('status', 'like', "%$value%")
-                            ->orWhere('description', 'like', "%$value%");
-                    });
-                }
-            })
-            ->addColumn('action', function ($data) {
-                // add your action column logic here
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-    }
-    
-    public function create(Request $request){
-        if (!Auth::user()->can($this->controller.'-create')){
-            return $this->unauthorizedAccessModule();
-        }  
+        $trx = new Transaction;
+        $datas = $trx->get_data();
 
-        $data = $request->all();
-        $res = Sample::create($data);
-        return $this->created($res, null);
-    }
-
-    public function update(Request $request, $id){
-        if (!Auth::user()->can($this->controller.'-edit')){
-            return $this->unauthorizedAccessModule();
-        }        
-
-        $res = Sample::find($id);
-        if($res == null){
-            return $this->errorNotFound(null);
-        }     
-        $data = $request->input();
-        $res->fill($data);
-        $res->save();        
-        return $this->ok($res, null);
+        return DataTables::of($datas)
+        ->filter(function ($query) use ($request) {
+            $query->when($request->has('search.value'), function ($q) use ($request) {
+                $value = $request->input('search.value');
+                $q->where(function ($query) use ($value) {
+                    $query->where('transactions.transaction_date', 'like', "%$value%")
+                        ->orWhere('transactions.status_transaction', 'like', "%$value%");
+                });
+            });
+        })
+        ->addColumn('action', function ($data) {
+            // add your action column logic here
+        })
+        ->rawColumns(['action'])
+        ->make(true);
     }
     
     public function detail($id){
@@ -84,10 +63,14 @@ class TransactionController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
-        $res = Sample::find($id);
-        if($res == null){
+        $trx = new Transaction;
+        $datas = $trx->get_data();
+
+        $res = $datas->find($id);
+        if(!$res){
             return $this->errorNotFound(null);
-        }        
+        }    
+
         return $this->ok($res, null);
     }
 

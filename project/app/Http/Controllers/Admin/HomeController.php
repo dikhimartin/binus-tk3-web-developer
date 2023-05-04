@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Traits\RespondsWithHttpStatus;
 use PeterColes\Countries\CountriesFacade;
 use DB;
 use App\User;
@@ -14,6 +15,9 @@ use Zizaco\Entrust\EntrustFacade as Entrust;
 
 class HomeController extends Controller
 {
+
+    use RespondsWithHttpStatus;
+
     private $controller = 'home';
     
     public function __construct()
@@ -26,7 +30,6 @@ class HomeController extends Controller
     }
 
     public function index(){
-
       $controller =$this->controller;
       $pages_title="Dashboard";
       $page_active='dashboard';

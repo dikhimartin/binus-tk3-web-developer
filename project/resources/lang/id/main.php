@@ -134,4 +134,8 @@ return [
     // Transaction
     'transaction' => 'Penjualan',
     'transaction_list' => 'Daftar Penjualan',
+    'transaction_date' => 'Tanggal Transaksi',
+    'pending' => 'Menunggu',
+    'reject' => 'Ditolak',
+    'finish' => 'Selesai',
 ];

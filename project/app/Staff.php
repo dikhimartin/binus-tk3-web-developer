@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuid;
+use Illuminate\Support\Facades\Auth;
+
 
 class Staff extends Model
 {
@@ -44,5 +46,8 @@ class Staff extends Model
         return $data;
     }
 
+    public function get_staff_id(){
+        return Staff::select()->where("user_id", Auth::user()->id)->pluck("id");
+    } 
 
 }

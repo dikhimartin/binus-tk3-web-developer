@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Customer;
 use App\Transaction;
 use App\TransactionDetail;
 use App\Traits\RespondsWithHttpStatus;
@@ -20,8 +21,14 @@ class TransactionController extends Controller
         $productPrices = $request->input('product_price');
         $quantities = $request->input('quantity');
     
-        $transaction = Transaction::create();
-    
+        $data = array();
+        $customer = new Customer;
+        $customerID = $customer->get_customer_id();
+        if ($customerID) {
+            $data['customer_id'] = $customerID;
+        }
+        
+        $transaction = Transaction::create($data);
         for ($i = 0; $i < count($productIds); $i++) {
             $sub_price = $productPrices[$i] * $quantities[$i];
             TransactionDetail::create([

@@ -62,13 +62,6 @@
 							</div>
 						</div>
 					@endslot
-					
-					@slot('button_slot')
-						<!--begin::Add data-->
-						@permission('transaction-create')
-							<button type="button" class="btn btn-primary" onclick="add()">{{__('main.add_new')}}</button>
-						@endpermission
-					@endslot
 				@endcomponent
 				
 				<div class="card-body pt-0">
@@ -81,11 +74,10 @@
 									<input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_server_side .form-check-input" value="1"/>
 								</div>
 							</th>
-							<th>{{ __('main.name') }}</th>
-							<th>{{ __('main.description') }}</th>
+							<th>Nama Pembeli</th>
+							<th>Nama Staff</th>
 							<th>Status</th>
-							<th>{{ __('main.created_date') }}</th>
-							<th>{{ __('main.updated_date') }}</th>
+							<th>{{ __('main.transaction_date') }}</th>
 							<th class="text-end min-w-100px">{{__('main.action')}}</th>
 						</tr>
 						</thead>
@@ -139,22 +131,7 @@
 	<script>
 		"use strict";
 
-		const URL_API = `{{ url('admin/samples') }}`
-
-		// Function definition
-		function add() {
-			$('#{{ $controller  }}')[0].reset();
-
-			// Set text
-			$('#{{ $controller  }}_submit_text').text(`{{ __('main.save') }}`);
-			$('#{{ $controller  }}_header_title').text(`{{ __('main.create_new') }}`);
-
-			// Set method
-			$('input[name="_method"]').val('post');
-
-			// Show the modal
-			$('#{{ $controller  }}_trigger').modal('show');
-		}	
+		const URL_API = `{{ url('admin/transactions') }}`
 
 		function edit(id) {
 			// Reset the form
@@ -212,7 +189,7 @@
 					searchDelay: 500,
 					processing: true,
 					serverSide: true,
-					order: [[4, 'desc']],
+					order: [[0, 'desc']],
 					stateSave: true,
 					select: {
 						style: 'multi',
@@ -224,11 +201,10 @@
 					},
 					columns: [
 						{ data: 'id' },
-						{ data: 'name' },
-						{ data: 'description' },
-						{ data: 'status' },
-						{ data: 'created_at' },
-						{ data: 'updated_at' },
+						{ data: 'customer_name' },
+						{ data: 'staff_name' },
+						{ data: 'status_transaction' },
+						{ data: 'transaction_date' },
 						{ data: null },
 					],
 					columnDefs: [
@@ -243,16 +219,12 @@
 							}
 						},
 						{
-							targets: 1,
-							render: function (data, type, row) {
-								return `<a href="javascript:void(0)" onclick="edit('`+ row.id +`')" class="text-gray-800 text-hover-primary mb-1">`+ row.name +`</a>`;
-							}
-						},
-						{
 							targets: 3,
 							render: function (data) {
-								var labelClass = data == 0 ? 'primary' : 'danger';
-								var labelText = data == 0 ? '{{ __('main.active') }}' : '{{ __('main.non-active') }}';
+								var arrStatus = {!! json_encode(arrStatusTransaction()) !!};
+								var arrLabel = {!! json_encode(arrStatusTransactionlabel()) !!};
+								var labelText = arrStatus[data] || '';
+								var labelClass = arrLabel[data] || '';
 								return '<span class="badge badge-' + labelClass + '">' + labelText + '</span>';
 							}
 						},
@@ -280,7 +252,15 @@
 										@permission('transaction-edit')
 											<div class="menu-item px-3">
 												<a href="javascript:void(0)" onclick="edit('`+ data["id"] +`')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
-													{{ __('main.edit') }}
+													{{ __('main.reject') }}
+												</a>
+											</div>
+										@endpermission
+
+										@permission('transaction-edit')
+											<div class="menu-item px-3">
+												<a href="javascript:void(0)" onclick="edit('`+ data["id"] +`')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+													{{ __('main.finish') }}
 												</a>
 											</div>
 										@endpermission
@@ -580,136 +560,8 @@
 			}
 		}();
 
-		var KTModalForm = function () {
-			var submitButton;
-			var validator;
-			var form;
-			var modal;
-		
-			// Init form inputs
-			var handleForm = function () {
-
-				// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-				validator = FormValidation.formValidation(
-					form,
-					{
-						fields: {
-							'name': {
-								validators: {
-									notEmpty: {
-										message: `Name {{ __('main.is_required') }}`
-									}
-								}
-							}
-						},
-						plugins: {
-							trigger: new FormValidation.plugins.Trigger(),
-							bootstrap: new FormValidation.plugins.Bootstrap5({
-								rowSelector: '.fv-row',
-								eleInvalidClass: '',
-								eleValidClass: ''
-							})
-						}
-					}
-				);
-
-				// Action buttons
-				submitButton.addEventListener('click', function (e) {
-					e.preventDefault();
-
-					// Validate form before submit
-					if (validator) {
-						validator.validate().then(function (status) {
-							console.log('validated!');
-
-							if (status == 'Valid') {
-								submitButton.setAttribute('data-kt-indicator', 'on');
-								
-								// Disable submit button whilst loading
-								submitButton.disabled = true;
-
-								// set data
-								var url;
-								var method = form._method.value;
-								var formData = new FormData(document.querySelector('#{{ $controller  }}'));
-								if (form._method.value == "post"){
-									url = URL_API;
-								}else if  (method == "put"){
-									url = URL_API + "/" + form._id.value;
-								}
-								submitForm(url, method, formData);								
-
-							} else {
-								ToastrError(`{{ __('main.sorry_looks_like_there_are_some_errors_detected_please_try_again') }}`);
-							}
-						});
-					}
-				});
-
-				// Send data to server | POST | PUT
-				function submitForm(url, method, formData) {
-					$.ajaxSetup({
-						headers: {
-							'X-HTTP-Method-Override': method
-						}
-					});
-					$.ajax({
-						url : url,
-						type: "POST",
-						data: formData,
-						contentType: false,
-						processData: false,
-						headers: {
-							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-						},						
-						dataType: "JSON",
-						success: function(response){
-							var messages = "{{ __('main.data_added_succesfully') }}";
-							if(method.toLowerCase() == "put"){
-								messages = "{{ __('main.data_succesfully_changed') }}";
-							}
-
-							submitButton.removeAttribute('data-kt-indicator');
-							ToastrSuccess(messages);
-							if (typeof KTDatatablesServerSide !== 'undefined') {
-								KTDatatablesServerSide.refresh();
-							}
-							// Close the modal
-							if (typeof modal !== 'undefined') {
-								modal.hide();
-							}
-							// Enable submit button after loading
-							submitButton.disabled = false;
-						},
-						error: function (jqXHR, textStatus, errorThrown) {
-							if (jqXHR.responseJSON.status.message != undefined){
-								errorThrown = jqXHR.responseJSON.status.message;
-							}
-							ToastrError(errorThrown);
-							submitButton.removeAttribute('data-kt-indicator');
-							submitButton.disabled = false;
-						}
-					}); 
-				}	
-			}
-
-			return {
-				// Public functions
-				init: function () {
-					// Elements
-					modal = new bootstrap.Modal(document.querySelector('#{{ $controller  }}_trigger'));
-
-					form = document.querySelector('#{{ $controller  }}');
-					submitButton = form.querySelector('#{{ $controller  }}_submit');
-
-					handleForm();
-				}
-			};
-		}();
-
 		// On document ready
 		KTUtil.onDOMContentLoaded(function () {
-			KTModalForm.init();
 			KTDatatablesServerSide.init();
 		});
 	</script>
