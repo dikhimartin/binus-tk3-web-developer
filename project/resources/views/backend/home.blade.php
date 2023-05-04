@@ -39,40 +39,43 @@
                 
                 <!--begin::Sidebar-->
                 <div class="flex-row-auto w-xl-550px">
-                    <div class="card card-flush bg-body" id="kt_pos_form">
-                        <div class="card-header pt-5">
-                            <h3 class="card-title fw-bold text-gray-800 fs-2qx">Daftar keranjang</h3>
-                            <div class="card-toolbar">
-                                <a href="javascript:void(0)" onclick="clear_cart()" class="btn btn-light-primary fs-4 fw-bold py-4">Hapus keranjang</a>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="table-responsive mb-8">
-                                <table class="table align-middle gs-0 gy-4 my-0">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th class="min-w-125px"></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="item-cart"></tbody>
-                                </table>
-                            </div>
-                            
-                            <div class="d-flex flex-stack bg-success rounded-3 p-6 mb-11">
-                                <div class="fs-6 fw-bold text-white">
-                                    <span class="d-block fs-2qx lh-1">Total</span>
-                                </div>
-                                <div class="fs-6 fw-bold text-white text-end">
-                                    <span class="d-block fs-2qx lh-1" id="grant-total"></span>
+                    <form class="form" id="form_cart_order" enctype="multipart/form-data">
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                        <div class="card card-flush bg-body">
+                            <div class="card-header pt-5">
+                                <h3 class="card-title fw-bold text-gray-800 fs-2qx">Daftar keranjang</h3>
+                                <div class="card-toolbar">
+                                    <a href="javascript:void(0)" onclick="clear_cart()" class="btn btn-light-primary fs-4 fw-bold py-4">Hapus keranjang</a>
                                 </div>
                             </div>
-                            <div class="m-0">
-                                <button class="btn btn-primary fs-1 w-100 py-4">Pesan</button>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive mb-8">
+                                    <table class="table align-middle gs-0 gy-4 my-0">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="min-w-125px"></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="item-cart"></tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="d-flex flex-stack bg-success rounded-3 p-6 mb-11">
+                                    <div class="fs-6 fw-bold text-white">
+                                        <span class="d-block fs-2qx lh-1">Total</span>
+                                    </div>
+                                    <div class="fs-6 fw-bold text-white text-end">
+                                        <span class="d-block fs-2qx lh-1" id="grant-total"></span>
+                                    </div>
+                                </div>
+                                <div class="m-0">
+                                    <a href="javascript:void(0)" onclick="SendOrder()" class="btn btn-primary fs-1 w-100 py-4">Pesan</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -210,13 +213,6 @@
             accumulate_grand_total();
         }
 
-        function remove_item(id){
-            const item = $(`#item-cart tr[data-id="${id}"]`);
-            item.remove(); // removes the selected item from the cart
-            $(`#hightlight_id_${id}`).removeClass('bg-primary text-white');
-            accumulate_grand_total();
-        }
-
         function clear_cart(){
             Swal.fire({
                 text: "{{ __('main.are_you_sure_want_to_delete' )}}",
@@ -231,14 +227,25 @@
                 }
             }).then(function (result) {
                 if (result.value) {
-                    const item = $(`#item-cart`);
-                    item.empty();
-                    $('.card-hightlight').removeClass('bg-primary text-white');
-                    accumulate_grand_total();
+                    clear_item();
                 } else if (result.dismiss === 'cancel') {
                     SwalError("{{ __('main.was_not_deleted') }}");
                 }
             });
+        }
+
+        function remove_item(id){
+            const item = $(`#item-cart tr[data-id="${id}"]`);
+            item.remove(); // removes the selected item from the cart
+            $(`#hightlight_id_${id}`).removeClass('bg-primary text-white');
+            accumulate_grand_total();
+        }
+
+        function clear_item(){
+            const item = $(`#item-cart`);
+            item.empty();
+            $('.card-hightlight').removeClass('bg-primary text-white');
+            accumulate_grand_total();
         }
 
         function increased_qty(id){
@@ -305,5 +312,33 @@
             });
             $("#grant-total").text(IDRCurrency(totalPrice));
         }
+
+        // Send data to server
+        function SendOrder() {
+            var formData = new FormData(document.querySelector('#form_cart_order'));
+            $.ajax({
+                url : "/api/transaction/order",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },						
+                dataType: "JSON",
+                success: function(response){
+                    var messages = "Pembelian berhasil";
+                    ToastrSuccess(messages);
+                    clear_item();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.responseJSON.status.message != undefined){
+                        errorThrown = jqXHR.responseJSON.status.message;
+                    }
+                    ToastrError(errorThrown);
+                }
+            }); 
+        }	        
+
     </script>
 @endpush

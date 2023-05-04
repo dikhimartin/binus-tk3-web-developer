@@ -22,10 +22,10 @@ Route::prefix('location')->group(function () {
 
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/api', 'namespace' => 'Api'), function () {
 	Route::get('/products','ProductController@get_data');
+	Route::post('/transaction/order','TransactionController@order');
 });
 
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'namespace' => 'Admin'), function () {
-
 	Route::get('/dashboard', 'HomeController@index')->name('home');
 
 	/*

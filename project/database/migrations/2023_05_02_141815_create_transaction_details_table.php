@@ -19,6 +19,7 @@ class CreateTransactionDetailsTable extends Migration
             $table->uuid('product_id');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
+            $table->decimal('sub_price', 10, 2);
             $table->integer('sort')->nullable();
             $table->string('additional', 100)->nullable(true);
             $table->timestamps();
