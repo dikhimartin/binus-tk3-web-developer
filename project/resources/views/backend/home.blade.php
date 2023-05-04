@@ -91,6 +91,16 @@
             getProductList();
         });
 
+        // define throttling function
+        function throttle(func, delay) {
+            let timeoutId;
+            return function(...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+
         // define function to get product list from API
         const getProductList = () => {
             axios.get('/api/products', {
@@ -141,7 +151,12 @@
         };
 
         // attach event listener to search query input
-        $('#search-query').on('input', handleSearchQuery);
+        $('#search-query').on('input', throttle(function(event) {
+            const searchQuery = event.target.value.trim();
+            if (searchQuery.length >= 3 || searchQuery.length === 0) {
+                setTimeout(() => handleSearchQuery(searchQuery), 100);
+            }
+        }, 100));
 
         function add_to_cart(element){
             // Get data
