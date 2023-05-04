@@ -9,12 +9,6 @@
             box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.1s ease-in-out;
         }
-        .card.selected {
-            background-color: red;
-        }
-
-
-        
     </style>
 @endpush
 
@@ -62,7 +56,8 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody id="item-cart"></tbody>
+                                    <tbody id="item-cart">
+                                    </tbody>
                                 </table>
                             </div>
                             
@@ -229,6 +224,11 @@
                     <td class="text-end">
                         <span class="fw-bold text-primary fs-2" price="${product_price}" >${formated_price}</span>
                     </td>
+                    <td class="text-end">
+                        <a href="javascript:void(0)" onclick=remove_item('${product_id}') class="btn btn-sm btn-danger">x
+                        </a>
+                    </td>
+
                 </tr>
             `;
             // Add highlight to the corresponding div
@@ -237,12 +237,17 @@
             $("#item-cart").append(item);
         }
 
+        function remove_item(id){
+            const item = $(`#item-cart tr[data-id="${id}"]`);
+            item.remove(); // removes the selected item from the cart
+            $(`#hightlight_id_${id}`).removeClass('bg-primary text-white');
+        }
+
         function clear_cart(){
             const item = $(`#item-cart`);
             item.empty();
             $('.card-hightlight').removeClass('bg-primary text-white');
         }
-
         function increased_qty(id){
             var $input = $("#quantity_"+id);
             var quantity = parseInt($input.val());
