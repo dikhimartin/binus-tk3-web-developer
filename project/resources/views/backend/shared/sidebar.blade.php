@@ -48,7 +48,7 @@
                 </div>
 
                 <!--begin:Menu item-->
-                @if ($user->can('sample-list'))
+                <!-- @if ($user->can('sample-list'))
                     <div class="menu-item">
                         <a class="menu-link {!! $sidebarActive == 'sample' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/sample' ))}}">
                             <span class="menu-icon">
@@ -62,7 +62,7 @@
                             <span class="menu-title">{{ __('main.sample') }}</span>
                         </a>
                     </div>
-                @endif
+                @endif -->
 
                 <!--begin:Menu item-->
                 @if ($user->can('transaction-list'))
