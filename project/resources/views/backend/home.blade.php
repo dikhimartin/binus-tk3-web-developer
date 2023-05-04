@@ -12,6 +12,9 @@
         .card.selected {
             background-color: red;
         }
+
+
+        
     </style>
 @endpush
 
@@ -32,134 +35,53 @@
             <div class="d-flex flex-column flex-xl-row">
                 
                 <div class="row d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
-
-                    <div class="col-md-12">
-                        <div class="input-group">
+                    <div class="col-md-12 ">
+                        <div class="input-group mb-8">
                             <input type="text" id="search-query" class="form-control" placeholder="Search Product">
                         </div>
+                        <div id="product-list-container" class="row"></div>
                     </div>
-
-
-                    <div id="product-list-container" class="row">
-                        <!-- product cards will be added dynamically here -->
-                    </div>
-
-                    <!--begin::Content-->
-                    <!-- @foreach($products as $value)
-                        <div class="col-md-3 mb-4">
-                            <div class="card card-product">
-                                <img class="card-img-top" src="{{ $value->assets_absolute_path }}" alt="{{ $value->name }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $value->name }}</h5>
-                                    <p class="card-text text-center text-gray-400 fw-semibold d-block fs-6 mt-n1">{{ $value->product_type_name }}</p>
-                                    <p class="card-text text-center text-success text-end fw-bold fs-1">{{ $value->selling_price }}</p>
-                                    <p class="card-text text-center text-primary fw-bold">{{ $value->stock }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach -->
                 </div>
                 
                 <!--begin::Sidebar-->
-                <div class="flex-row-auto w-xl-425px">
-                    <!--begin::Pos order-->
+                <div class="flex-row-auto w-xl-550px">
                     <div class="card card-flush bg-body" id="kt_pos_form">
-                        <!--begin::Header-->
                         <div class="card-header pt-5">
                             <h3 class="card-title fw-bold text-gray-800 fs-2qx">Current Order</h3>
-                            <!--begin::Toolbar-->
                             <div class="card-toolbar">
-                                <a href="javascript:void(0)" class="btn btn-light-primary fs-4 fw-bold py-4">Clear All</a>
+                                <a href="javascript:void(0)" onclick="clear_cart()" class="btn btn-light-primary fs-4 fw-bold py-4">Clear All</a>
                             </div>
-                            <!--end::Toolbar-->
                         </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
                         <div class="card-body pt-0">
-                            <!--begin::Table container-->
                             <div class="table-responsive mb-8">
-                                <!--begin::Table-->
                                 <table class="table align-middle gs-0 gy-4 my-0">
-                                    <!--begin::Table head-->
                                     <thead>
                                         <tr>
-                                            <th class="min-w-175px"></th>
-                                            <th class="w-125px"></th>
-                                            <th class="w-60px"></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <!--end::Table head-->
-                                    <!--begin::Table body-->
-                                    <tbody>
-                                        <tr data-kt-pos-element="item" data-kt-pos-item-price="33">
-                                            <td class="pe-0">
-                                                <div class="d-flex align-items-center">
-                                                    <img src="{{ URL::asset('assets/media/stock/food/img-2.jpg') }}" class="w-50px h-50px rounded-3 me-3" alt="" />
-                                                    <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">T-Bone Stake</span>
-                                                </div>
-                                            </td>
-                                            <td class="pe-0">
-                                                <!--begin::Dialer-->
-                                                <div class="position-relative d-flex align-items-center" data-kt-dialer="true" data-kt-dialer-min="1" data-kt-dialer-max="10" data-kt-dialer-step="1" data-kt-dialer-decimals="0">
-                                                    <!--begin::Decrease control-->
-                                                    <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-400" data-kt-dialer-control="decrease">
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr089.svg-->
-                                                        <span class="svg-icon svg-icon-3x">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor" />
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->
-                                                    </button>
-                                                    <!--end::Decrease control-->
-                                                    <!--begin::Input control-->
-                                                    <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" readonly="readonly" value="2" />
-                                                    <!--end::Input control-->
-                                                    <!--begin::Increase control-->
-                                                    <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-400" data-kt-dialer-control="increase">
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
-                                                        <span class="svg-icon svg-icon-3x">
-                                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <rect opacity="0.5" x="11" y="18" width="12" height="2" rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
-                                                                <rect x="6" y="11" width="12" height="2" rx="1" fill="currentColor" />
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->
-                                                    </button>
-                                                    <!--end::Increase control-->
-                                                </div>
-                                                <!--end::Dialer-->
-                                            </td>
-                                            <td class="text-end">
-                                                <span class="fw-bold text-primary fs-2" data-kt-pos-element="item-total">$66.00</span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                    <tbody id="item-cart"></tbody>
                                 </table>
-                                <!--end::Table-->
                             </div>
-                            <!--end::Table container-->
-                            <!--begin::Summary-->
+                            
                             <div class="d-flex flex-stack bg-success rounded-3 p-6 mb-11">
-                                <!--begin::Content-->
                                 <div class="fs-6 fw-bold text-white">
                                     <span class="d-block lh-1 mb-2">Subtotal</span>
                                     <span class="d-block mb-2">Discounts</span>
                                     <span class="d-block mb-9">Tax(12%)</span>
                                     <span class="d-block fs-2qx lh-1">Total</span>
                                 </div>
-                                <!--end::Content-->
-                                <!--begin::Content-->
                                 <div class="fs-6 fw-bold text-white text-end">
                                     <span class="d-block lh-1 mb-2" data-kt-pos-element="total">$100.50</span>
                                     <span class="d-block mb-2" data-kt-pos-element="discount">-$8.00</span>
                                     <span class="d-block mb-9" data-kt-pos-element="tax">$11.20</span>
                                     <span class="d-block fs-2qx lh-1" data-kt-pos-element="grant-total">$93.46</span>
                                 </div>
-                                <!--end::Content-->
                             </div>
-                            <!--end::Summary-->
-                            <!--begin::Payment Method-->
+
+
                             <div class="m-0">
                                 <!--begin::Title-->
                                 <h1 class="fw-bold text-gray-800 mb-5">Payment Method</h1>
@@ -213,9 +135,7 @@
                             </div>
                             <!--end::Payment Method-->
                         </div>
-                        <!--end: Card Body-->
                     </div>
-                    <!--end::Pos order-->
                 </div>
             </div>
         </div>
@@ -225,51 +145,145 @@
 
 <!--begin::Vendors Javascript(used for this page only)-->
 @push('private_js')
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        // define variables for search and filter parameters
+        let searchQuery = '';
+        let filterType = '';
 
-    // define variables for search and filter parameters
-    let searchQuery = '';
-    let filterType = '';
-
-    $(document).ready(function() {
-        getProductList();
-    });
-
-    // define function to get product list from API
-    const getProductList = () => {
-        axios.get('/api/products', {
-            params: {
-                search: searchQuery,
-                filter: filterType
-            }
-        })
-        .then(response => {
-            // remove previous product cards from the container
-            $('#product-list-container').empty();
-            // loop through the product data and add new cards to the container
-            response.data.data.forEach(product => {
-                let cardHtml = `
-                    <div class="col-md-3 mb-4">
-                        <div class="card card-product">
-                            <img class="card-img-top" src="${product.assets_absolute_path}" alt="${product.name}">
-                            <div class="card-body">
-                                <h5 class="card-title">${product.name}</h5>
-                                <p class="card-text text-center text-gray-400 fw-semibold d-block fs-6 mt-n1">${product.product_type_name}</p>
-                                <p class="card-text text-center text-success text-end fw-bold fs-1">${product.selling_price}</p>
-                                <p class="card-text text-center text-primary fw-bold">${product.stock}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                $('#product-list-container').append(cardHtml);
-            });
-        })
-        .catch(error => {
-            // display error message
-            $('#product-list-container').html('<p>Product not available.</p>');
+        $(document).ready(function() {
+            getProductList();
         });
-    };
+
+        // define function to get product list from API
+        const getProductList = () => {
+            axios.get('/api/products', {
+                params: {
+                    search: searchQuery,
+                    filter: filterType
+                }
+            })
+            .then(response => {
+                // remove previous product cards from the container
+                $('#product-list-container').empty();
+                // loop through the product data and add new cards to the container
+                response.data.data.forEach(product => {
+                    var formatted_price = IDRCurrency(product.selling_price);
+                    let cardHtml = `
+                        <div class="col-md-3 mb-4">
+                            <a href="javascript:void(0)" class="text-black">
+                                <div onclick="add_to_cart(this)" class="card card-product" id="${product.id}">
+                                    <img class="card-img-top" src="${product.assets_absolute_path}" alt="${product.name}">
+                                    <div class="card-body card-hightlight" id="hightlight_id_${product.id}">
+                                        <h5 class="card-title product-name">${product.name}</h5>
+                                        <p class="card-text product text-center text-grey fw-semibold d-block fs-6 mt-n1">${product.product_type_name}</p>
+                                        <p class="card-text product-price text-center text-end fw-bold fs-1" price="${product.selling_price}" >${formatted_price}</p>
+                                        <p class="card-text product-stock text-center fw-bold">${product.stock}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                    $('#product-list-container').append(cardHtml);
+                });
+            })
+            .catch(error => {
+                $('#product-list-container').html('<p>Product not available.</p>');
+            });
+        };
+
+        function add_to_cart(element){
+            // Get data
+            var product_id = element.id;
+            var product_image = element.children[0].src;
+            var product_name = element.querySelector('.product-name').textContent;
+            var product_price = element.querySelector('.product-price').getAttribute('price');
+            var formated_price = element.querySelector('.product-price').textContent;
+            var product_stock = element.querySelector('.product-stock').textContent;            
+
+            const existingItem = $(`#item-cart tr[data-id="${product_id}"]`);
+
+             // If the product is already in the cart, update the quantity
+            if (existingItem.length) {
+                return
+            }
+
+            let item = `
+                <tr data-kt-pos-element="item" data-id="${product_id}">
+                    <td class="pe-0">
+                        <div class="d-flex align-items-center">
+                        <img src="${product_image}" class="w-50px h-50px rounded-3 me-3" alt="">
+                        <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">${product_name}</span>
+                        </div>
+                    </td>
+                    <td class="pe-0">
+                        <div class="input-qty input-group input-group-sm">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="decreased_qty('${product_id}')" type="button" data-quantity="minus" data-field="quantity">
+                                <i class="fa fa-duotone fa-minus"></i>
+                            </button>
+                            <input type="text" id="quantity_${product_id}" onkeyup="input_qty('${product_id}')" name="quantity" class="form-control input-number text-center" value="1" min="1" max="${product_stock}">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="increased_qty('${product_id}')" type="button" data-quantity="plus" data-field="quantity">
+                                <i class="fa fa-duotone fa-plus"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td class="text-end">
+                        <span class="fw-bold text-primary fs-2" price="${product_price}" >${formated_price}</span>
+                    </td>
+                </tr>
+            `;
+            // Add highlight to the corresponding div
+            $(`#hightlight_id_${product_id}`).addClass('bg-primary text-white');
+
+            $("#item-cart").append(item);
+        }
+
+        function clear_cart(){
+            const item = $(`#item-cart`);
+            item.empty();
+            $('.card-hightlight').removeClass('bg-primary text-white');
+        }
+
+        function increased_qty(id){
+            var $input = $("#quantity_"+id);
+            var quantity = parseInt($input.val());
+            var quantityMax = parseInt($input.attr('max'));
+
+            if (quantity < quantityMax) {
+                $input.val(quantity + 1).trigger('change');
+            }
+        }
+        
+        function decreased_qty(id){
+            var $input = $("#quantity_"+id);
+            var quantity = parseInt($input.val());
+            var quantityMin = parseInt($input.attr('min'));
+    
+            if (quantity > quantityMin) {
+                $input.val(quantity - 1).trigger('change');
+            }
+        }
+
+        function input_qty(id){
+            var $input = $("#quantity_"+id);
+            var quantity = parseInt($input.val());
+            var quantityMin = parseInt($input.attr('min'));
+            var quantityMax = parseInt($input.attr('max'));
+
+            // check if input is a valid number
+            if (isNaN(quantity)) {
+                quantity = quantityMin;
+            }
+
+            // limit input value to min and max values
+            if (quantity < quantityMin) {
+                quantity = quantityMin;
+            }
+            if (quantity > quantityMax) {
+                quantity = quantityMax;
+            }
+
+            $input.val(quantity);
+        }
 
     </script>
 @endpush
