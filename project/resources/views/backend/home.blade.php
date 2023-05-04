@@ -41,9 +41,9 @@
                 <div class="flex-row-auto w-xl-550px">
                     <div class="card card-flush bg-body" id="kt_pos_form">
                         <div class="card-header pt-5">
-                            <h3 class="card-title fw-bold text-gray-800 fs-2qx">Current Order</h3>
+                            <h3 class="card-title fw-bold text-gray-800 fs-2qx">Daftar keranjang</h3>
                             <div class="card-toolbar">
-                                <a href="javascript:void(0)" onclick="clear_cart()" class="btn btn-light-primary fs-4 fw-bold py-4">Clear All</a>
+                                <a href="javascript:void(0)" onclick="clear_cart()" class="btn btn-light-primary fs-4 fw-bold py-4">Hapus keranjang</a>
                             </div>
                         </div>
                         <div class="card-body pt-0">
@@ -52,12 +52,11 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th></th>
+                                            <th class="min-w-125px"></th>
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody id="item-cart">
-                                    </tbody>
+                                    <tbody id="item-cart"> </tbody>
                                 </table>
                             </div>
                             
