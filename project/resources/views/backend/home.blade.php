@@ -218,10 +218,27 @@
         }
 
         function clear_cart(){
-            const item = $(`#item-cart`);
-            item.empty();
-            $('.card-hightlight').removeClass('bg-primary text-white');
-            accumulate_grand_total();
+            Swal.fire({
+                text: "{{ __('main.are_you_sure_want_to_delete' )}}",
+                icon: "warning",
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "{{ __('main.yes_deleted') }}",
+                cancelButtonText: "{{ __('main.no_cancel') }}",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-danger",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                }
+            }).then(function (result) {
+                if (result.value) {
+                    const item = $(`#item-cart`);
+                    item.empty();
+                    $('.card-hightlight').removeClass('bg-primary text-white');
+                    accumulate_grand_total();
+                } else if (result.dismiss === 'cancel') {
+                    SwalError("{{ __('main.was_not_deleted') }}");
+                }
+            });
         }
 
         function increased_qty(id){
