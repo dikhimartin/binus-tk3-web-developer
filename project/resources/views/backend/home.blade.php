@@ -214,12 +214,14 @@
             const item = $(`#item-cart tr[data-id="${id}"]`);
             item.remove(); // removes the selected item from the cart
             $(`#hightlight_id_${id}`).removeClass('bg-primary text-white');
+            accumulate_grand_total();
         }
 
         function clear_cart(){
             const item = $(`#item-cart`);
             item.empty();
             $('.card-hightlight').removeClass('bg-primary text-white');
+            accumulate_grand_total();
         }
 
         function increased_qty(id){
@@ -286,8 +288,5 @@
             });
             $("#grant-total").text(IDRCurrency(totalPrice));
         }
-
-
-
     </script>
 @endpush
