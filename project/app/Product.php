@@ -44,7 +44,8 @@ class Product extends Model
             'products.created_at',
             'products.updated_at') 
         ->leftjoin('assets', 'products.asset_id', '=', 'assets.id')
-        ->leftjoin('product_types', 'products.product_type_id', '=', 'product_types.id');
+        ->leftjoin('product_types', 'products.product_type_id', '=', 'product_types.id')
+        ->orderBy('product_type_name', 'desc'); // add this line to order by product_type_name
 
         return $data;
     }
