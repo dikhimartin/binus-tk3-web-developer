@@ -124,16 +124,23 @@
                 // loop through the product data and add new cards to the container
                 response.data.data.forEach(product => {
                     var action = `onclick="add_to_cart(this)"`;
-                    console.log(product.stock);
                     if (product.stock <= 0){
                         action = `onclick="ToastrError('Stok habis')"`;
                     }
+
+                    var path = `{{ config('app.url') }}`;
+                    var product_assets = path + '/images/product.png';
+                    if (row.assets_relative_path != null){
+                        product_assets = path + '/' + product.assets_relative_path; 
+                    }
+
+                                
                     var formatted_price = IDRCurrency(product.selling_price);
                     let cardHtml = `
                         <div class="col-md-3 mb-4">
                             <a href="javascript:void(0)" class="text-black">
                                 <div ${action} class="card card-product" id="${product.id}">
-                                    <img class="card-img-top" src="${product.assets_absolute_path}" alt="${product.name}">
+                                    <img class="card-img-top" src="${product_assets}" alt="${product.name}">
                                     <div class="card-body card-hightlight" id="hightlight_id_${product.id}">
                                         <h5 class="card-title product-name">${product.name}</h5>
                                         <p class="card-text product text-center text-grey fw-semibold d-block fs-6 mt-n1">${product.product_type_name}</p>

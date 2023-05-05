@@ -342,15 +342,13 @@
 						{
 							targets: 2,
 							render: function (data, type, row) {
-								var formatted_price = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row.purchase_price);
-								return formatted_price; // "Rp 10.000,00"
+								return IDRCurrency(row.purchase_price);
 							}
 						},
 						{
 							targets: 3,
 							render: function (data, type, row) {
-								var formatted_price = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(row.selling_price);
-								return formatted_price; // "Rp 10.000,00"
+								return IDRCurrency(row.selling_price);
 							}
 						},
 						{
