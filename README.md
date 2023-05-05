@@ -50,6 +50,51 @@ Tech Stack Requirement :
 
 
 
+## Module Aplikasi 
+
+
+Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :
+
+1. #### Login Dan Registrasi
+
+   ![](https://i.ibb.co/kxb54X5/login-registrasi.png)
+
+   
+
+2. #### Profil
+
+   ![https://i.ibb.co/wNPbDZ9/profile.png](https://i.ibb.co/wNPbDZ9/profile.png)
+
+   
+
+3. #### Dashboard (Mini Pos)
+
+   ![https://i.ibb.co/YZ5K19N/mini-pos.png](https://i.ibb.co/YZ5K19N/mini-pos.png)
+
+   
+
+4. #### Master Data
+
+   - ##### Jenis Barang
+
+     ![](https://i.ibb.co/myMSp0n/product-type.png)
+
+   - ##### Barang
+
+   - ##### Pembeli
+
+   - ##### Staff
+
+5. #### Penjualan
+
+6. #### Akses Pengguna
+
+   - ##### Daftar Pengguna
+
+   - ##### Hak Akses Pengguna
+
+
+
 ## Cara menjalankan aplikasi
 
 #### 1. Native Server
@@ -151,10 +196,9 @@ Buka browser pada URL  http://localhost:8000, untuk mengakses aplikasi.
   docker-compose up -d --force-recreate
   ```
 
-- Akses bash terminal
+- Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :Akses bash terminal
 
   ```shell
   docker-compose exec myapp bash
   ```
 
-------
