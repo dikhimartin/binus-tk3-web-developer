@@ -83,6 +83,7 @@ return [
     'please_choose' => 'Silahkan memilih',
     'master_data' => 'Master Data',
     'search' => 'Cari',
+    'show' => 'Lihat',
 
     // Profile
     'profile' =>'Profil saya',
@@ -133,6 +134,7 @@ return [
 
     // Transaction
     'transaction' => 'Penjualan',
+    'transaction_detail' => 'Detail Penjualan',
     'transaction_list' => 'Daftar Penjualan',
     'transaction_date' => 'Tanggal Transaksi',
     'pending' => 'Menunggu',

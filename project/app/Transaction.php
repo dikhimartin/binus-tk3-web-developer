@@ -55,6 +55,10 @@ class Transaction extends Model
         });
     }
 
+    public function transactionDetails(){
+        return $this->hasMany(TransactionDetail::class);
+    }
+
     // Query Builder version
     public function get_data(){
         $data = Transaction::select(

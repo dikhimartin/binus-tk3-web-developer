@@ -21,4 +21,14 @@ class TransactionDetail extends Model
     public $incrementing = false;
 
     protected $keyType = 'uuid';
+
+
+    public function transaction(){
+        return $this->belongsTo('App\Transaction');
+    }
+    
+    public function product() {
+        return $this->belongsTo('App\Product');
+    }
+
 }

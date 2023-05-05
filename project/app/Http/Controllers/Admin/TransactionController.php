@@ -64,13 +64,10 @@ class TransactionController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
-        $trx = new Transaction;
-        $datas = $trx->get_data();
-
-        $res = $datas->find($id);
+        $res = Transaction::with('transactionDetails.product')->find($id);
         if(!$res){
             return $this->errorNotFound(null);
-        }    
+        }
 
         return $this->ok($res, null);
     }

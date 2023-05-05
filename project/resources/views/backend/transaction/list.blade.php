@@ -36,21 +36,23 @@
 									<!--begin::Label-->
 									<label class="form-label fs-5 fw-semibold mb-3">Status:</label>
 									<!--begin::Options-->
-									<div class="d-flex flex-column flex-wrap fw-semibold" data-kt-docs-table-filter="status">
+									<div class="d-flex flex-column flex-wrap fw-semibold" data-kt-docs-table-filter="status_transaction">
 										<!--begin::Option-->
 										<label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-											<input class="form-check-input" type="radio" name="status" value="all" checked="checked" />
+											<input class="form-check-input" type="radio" name="status_transaction" value="all" checked="checked" />
 											<span class="form-check-label text-gray-600">{{ __('main.all') }}</span>
 										</label>
-										<!--begin::Option-->
 										<label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
-											<input class="form-check-input" type="radio" name="status" value="0" />
-											<span class="form-check-label text-gray-600">{{ __('main.active') }}</span>
+											<input class="form-check-input" type="radio" name="status_transaction" value="pending" />
+											<span class="form-check-label text-gray-600">{{ __('main.pending') }}</span>
 										</label>
-										<!--begin::Option-->
 										<label class="form-check form-check-sm form-check-custom form-check-solid mb-3">
-											<input class="form-check-input" type="radio" name="status" value="1" />
-											<span class="form-check-label text-gray-600">{{ __('main.non-active') }}</span>
+											<input class="form-check-input" type="radio" name="status_transaction" value="reject" />
+											<span class="form-check-label text-gray-600">{{ __('main.reject') }}</span>
+										</label>
+										<label class="form-check form-check-sm form-check-custom form-check-solid mb-3 me-5">
+											<input class="form-check-input" type="radio" name="status_transaction" value="finish" />
+											<span class="form-check-label text-gray-600">{{ __('main.finish') }}</span>
 										</label>
 									</div>
 								</div>
@@ -88,39 +90,13 @@
 			</div>
 
 			<!--begin::Modal Component-->
-			@component('backend.components.form-modal', ['modal_size' => 'modal-lg', 'modal_id' => $controller])
-				@section('form_modal')
-					<!--begin::Input group-->
-					<div class="fv-row mb-7">
-						<label class="required fs-6 fw-semibold mb-2">{{ __('main.name') }}</label>
-						<input type="text" class="form-control form-control-solid" placeholder="Type Name" name="name" />
-					</div>
-		
-					<div class="fv-row mb-7">
-						<label class="fs-6 fw-semibold mb-2">{{ __('main.description') }}</label>
-						<textarea class="form-control form-control-solid" rows="3" name="description" placeholder="Type description"></textarea>
-					</div>
-					
-					<!--begin::Options-->
-					<div class="fv-row mb-7">
-						<label class="fs-6 fw-semibold mb-2">Status</label>
-						<div class="d-flex">
-							<label class="form-check form-check-sm form-check-custom form-check-solid me-5">
-							<input class="form-check-input" type="radio" value="0" id="flexCheckChecked1" name="status" checked="">
-								<label class="form-check-label" for="flexCheckDefault1">
-									{{ __('main.active') }}
-								</label>
-							</label>
-							<label class="form-check form-check-sm form-check-custom form-check-solid">
-								<input class="form-check-input" type="radio" value="1" id="flexCheckChecked1" name="status">
-								<label class="form-check-label" for="flexCheckDefault1">
-									{{ __('main.non-active') }}
-								</label>
-							</label>
-						</div>        
+			@component('backend.components.modal', ['modal_size' => 'modal-lg', 'modal_id' => $controller])
+				@section('modal_content')
+					<div class="d-flex flex-column gap-5">
+						<div class="table-responsive" id="transaction-detail"></div>
 					</div>
 				@endsection
-			@endcomponent	
+			@endcomponent
 		</div>
 	</div>
 @endsection
@@ -133,38 +109,38 @@
 
 		const URL_API = `{{ url('admin/transactions') }}`
 
-		function edit(id) {
-			// Reset the form
-			$('#{{ $controller  }}')[0].reset();
-
-			// Set text
-			$('#{{ $controller  }}_submit_text').text(`{{ __('main.update') }}`);
-			$('#{{ $controller  }}_header_title').text(`{{ __('main.edit_data') }}`);
-
-			// Set method and ID values
-			$('input[name="_method"]').val('put');
-			$('input[name="_id"]').val(id);
-
+		function show_transaction_detail(id) {
 			// Fetching data
+			$('#{{ $controller  }}_header_title').text(`{{ __('main.transaction_detail') }}`);
 			$.ajax({
-				url : URL_API + '/' + id,
+				url : URL_API + '/' + id + "/detail",
 				type: "GET",
 				dataType: "JSON",             
 				success: function(response){
 					if (response.status.code === 200) {
 						const data = response.data;
 
-						$('input[name="name"]').val(data.name);
-						$('textarea[name="description"]').val(data.description);
-						
-						// Set the radio button value based on the status value
-						if (data.status === 0) {
-							$('input[value="0"][name="status"]').prop('checked', true);
-						} else {
-							$('input[value="1"][name="status"]').prop('checked', true);
-						}
-						// Show the modal
-						$('#{{ $controller  }}_trigger').modal('show');				
+						// Generate table
+						const table = $('<table>').addClass('table align-middle table-row-dashed fs-6 gy-5 mb-0');
+						const thead = $('<thead>').appendTo(table);
+						const tr = $('<tr>').addClass('text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0').appendTo(thead);
+						$('<th>').text('Nama Produk').appendTo(tr);
+						$('<th>').text('Harga').appendTo(tr);
+						$('<th>').text('Kuantitas').appendTo(tr);
+						$('<th>').text('Sub Harga').appendTo(tr);
+						const tbody = $('<tbody>').appendTo(table);
+
+						// Looping data transaction detail
+						data.transaction_details.forEach(function(detail) {
+							const tr = $('<tr>').appendTo(tbody);
+							$('<td>').text(detail.product.name).appendTo(tr);
+							$('<td>').text(IDRCurrency(detail.price)).appendTo(tr);
+							$('<td>').text(detail.quantity).appendTo(tr);
+							$('<td>').text(IDRCurrency(detail.sub_price)).appendTo(tr);
+						});
+
+						$('#transaction-detail').empty().append(table);
+						$('#{{ $controller  }}').modal('show');	
 					}
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -213,7 +189,7 @@
 					searchDelay: 500,
 					processing: true,
 					serverSide: true,
-					order: [[0, 'desc']],
+					order: [[4, 'desc']],
 					stateSave: true,
 					select: {
 						style: 'multi',
@@ -226,7 +202,7 @@
 					columns: [
 						{ data: 'id' },
 						{ data: 'creator_name' },
-						{ data: 'staff_name' },
+						{ data: 'modifier_name' },
 						{ data: 'status_transaction' },
 						{ data: 'transaction_date' },
 						{ data: null },
@@ -236,19 +212,18 @@
 							targets: 0,
 							orderable: false,
 							render: function (data) {
-								return `
-									<div class="form-check form-check-sm form-check-custom form-check-solid">
-										<input class="form-check-input" type="checkbox" value="${data}" />
-									</div>`;
+								return `<div class="form-check form-check-sm form-check-custom form-check-solid">
+											<input class="form-check-input" type="checkbox" value="${data}" />
+										</div>`;
 							}
 						},
 						{
 							targets: 1,
 							render: function (data, type, row) {
-								var	html = `<span class='text-black'>${row.creator_name}</span></br>
+								return `<a href="javascript:void(0)" onclick="show_transaction_detail('${row.id}')">
+											<span class='text-black'>${row.creator_name}</span></br>
 											<span class='text-primary'>Role : ${row.role_creator}</span>
-											`;
-								return html;
+										</a>`;
 							}
 						},
 						{
@@ -293,6 +268,14 @@
 									<!--begin::Menu-->
 									<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 										<!--begin::Menu item-->
+
+										@permission('transaction-list')
+											<div class="menu-item px-3">
+												<a href="javascript:void(0)" onclick="show_transaction_detail('${data["id"]}')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
+													{{ __('main.show') }}
+												</a>
+											</div>
+										@endpermission
 
 										@permission('transaction-edit')
 											<div class="menu-item px-3">
@@ -352,7 +335,7 @@
 			// Filter Datatable
 			var handleFilterDatatable = () => {
 				// Select filter options
-				filterStatus = document.querySelectorAll('[data-kt-docs-table-filter="status"] [name="status"]');
+				filterStatus = document.querySelectorAll('[data-kt-docs-table-filter="status_transaction"] [name="status_transaction"]');
 				const filterButton = document.querySelector('[data-kt-docs-table-filter="filter"]');
 
 				// Filter datatable on submit
