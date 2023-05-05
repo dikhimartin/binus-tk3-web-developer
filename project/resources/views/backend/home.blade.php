@@ -130,11 +130,10 @@
 
                     var path = `{{ config('app.url') }}`;
                     var product_assets = path + '/images/product.png';
-                    if (row.assets_relative_path != null){
+                    if (product.assets_relative_path != null){
                         product_assets = path + '/' + product.assets_relative_path; 
                     }
 
-                                
                     var formatted_price = IDRCurrency(product.selling_price);
                     let cardHtml = `
                         <div class="col-md-3 mb-4">
