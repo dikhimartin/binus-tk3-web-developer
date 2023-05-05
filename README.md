@@ -79,9 +79,43 @@ Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam websi
 
      ![](https://i.ibb.co/myMSp0n/product-type.png)
 
+     
+
    - ##### Barang
 
+     ![](https://i.ibb.co/kQcjk0b/product.png)
+
+     
+
    - ##### Pembeli
+
+     - Daftar Data
+
+       ![](https://i.ibb.co/Qfx9zPc/customer-list.png)
+
+       
+
+     - Tambah Data
+
+       - Tab Profil
+         ![](https://i.ibb.co/B2Br9Bs/tab-profile.png)
+
+         
+
+       - Tab Alamat
+         ![](https://i.ibb.co/zPR1YqG/tab-alamat.png)
+
+         
+
+       - Tab Akun
+         ![](https://i.ibb.co/7XQySkP/tab-akun.png)
+
+       
+
+     - Ubah Data
+       ![](https://i.ibb.co/KjLQrVQ/update-customer.png)
+
+     
 
    - ##### Staff
 
