@@ -106,7 +106,7 @@ class StaffController extends Controller
         
         // set image assets
         $avatar = Asset::upload($request->file('avatar'), "users");
-        if ($avatar['status'] == 'error') {
+        if (!empty($avatar) && $avatar['status'] == 'error') {
             return $this->badRequest($avatar['message']);
         }
         
@@ -162,7 +162,7 @@ class StaffController extends Controller
 
         // set image assets
         $avatar = Asset::upload($request->file('avatar'), "users", $user->asset_id);
-        if ($avatar['status'] == 'error') {
+        if (!empty($avatar) && $avatar['status'] == 'error') {
             return $this->badRequest($avatar['message']);
         }
         if (!empty($avatar['data'])) {
