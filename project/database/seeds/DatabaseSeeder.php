@@ -18,10 +18,9 @@ class DatabaseSeeder extends Seeder
             PermissionRoleTableSeeder::class,
             RoleUserTableSeeder::class,
             ProductTypesTableSeeder::class,
-
-            // ProvinceSeeder::class,
-            // CitySeeder::class,
-            // SubdistrictSeeder::class,
+            ProvinceSeeder::class,
+            CitySeeder::class,
+            SubdistrictSeeder::class,
         ]);
     }
 }
