@@ -120,13 +120,19 @@
                 if(response.data.data.length === 0) {
                     $('#product-list-container').html('<p>No products found.</p>');
                 }
+
                 // loop through the product data and add new cards to the container
                 response.data.data.forEach(product => {
+                    var action = `onclick="add_to_cart(this)"`;
+                    console.log(product.stock);
+                    if (product.stock <= 0){
+                        action = `onclick="ToastrError('Stok habis')"`;
+                    }
                     var formatted_price = IDRCurrency(product.selling_price);
                     let cardHtml = `
                         <div class="col-md-3 mb-4">
                             <a href="javascript:void(0)" class="text-black">
-                                <div onclick="add_to_cart(this)" class="card card-product" id="${product.id}">
+                                <div ${action} class="card card-product" id="${product.id}">
                                     <img class="card-img-top" src="${product.assets_absolute_path}" alt="${product.name}">
                                     <div class="card-body card-hightlight" id="hightlight_id_${product.id}">
                                         <h5 class="card-title product-name">${product.name}</h5>
@@ -330,6 +336,7 @@
                     var messages = "Pembelian berhasil";
                     ToastrSuccess(messages);
                     clear_item();
+                    getProductList();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if (jqXHR.responseJSON.status.message != undefined){
