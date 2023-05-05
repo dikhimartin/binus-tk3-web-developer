@@ -5,7 +5,7 @@
 		<!--begin::Copyright-->
 		<div class="text-dark order-2 order-md-1">
 			<span class="text-muted fw-semibold me-1"><script>document.write(new Date().getFullYear())</script>&copy;</span>
-			<a href="javascript:void(0)" class="text-gray-800 text-hover-primary">Paradigm</a>
+			<a href="javascript:void(0)" class="text-gray-800 text-hover-primary">Binusian</a>
 		</div>
 	</div>
 </div>
