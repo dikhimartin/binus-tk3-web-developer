@@ -15,7 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('customer_id');
+            $table->uuid('customer_id')->nullable();
             $table->uuid('staff_id')->nullable();
             $table->datetime('transaction_date');
             $table->longText('description')->nullable();

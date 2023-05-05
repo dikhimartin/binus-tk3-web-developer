@@ -47,7 +47,8 @@ class Staff extends Model
     }
 
     public function get_staff_id(){
-        return Staff::select()->where("user_id", Auth::user()->id)->pluck("id");
+        $staffID = Staff::select()->where("user_id", Auth::user()->id)->pluck("id")->first();
+        return $staffID;
     } 
 
 }

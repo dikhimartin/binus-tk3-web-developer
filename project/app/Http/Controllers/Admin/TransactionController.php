@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Staff;
 use App\Transaction;
 use App\TransactionDetail;
 use App\Traits\RespondsWithHttpStatus;
@@ -81,7 +82,14 @@ class TransactionController extends Controller
         if(!$res){
             return $this->errorNotFound(null);
         }
+
+        $staff = new Staff;
+        $staffID = $staff->get_staff_id();
+        if ($staffID) {
+            $res->staff_id = $staffID;
+        }
         $res->status_transaction = $request->status;
+        $res->modifier_id = Auth::user()->id;
         $res->save();        
         return $this->ok($res, null);        
     }

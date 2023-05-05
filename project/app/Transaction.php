@@ -46,9 +46,6 @@ class Transaction extends Model
             if (empty($model->transaction_date)) {
                 $model->transaction_date = now(); 
             }
-            if (empty($model->customer_id)) {
-                $model->customer_id = Auth::id(); 
-            }
             if (empty($model->creator_id)) {
                 $model->creator_id = Auth::id(); 
             }
@@ -64,6 +61,8 @@ class Transaction extends Model
             'transactions.id',
             'transactions.customer_id',
             'transactions.staff_id',
+            'creator.name as creator_name',
+            'roles.display_name as roles',
             'user_customer.name as customer_name',
             'user_staff.name as staff_name',
             'transactions.transaction_date',
@@ -72,9 +71,12 @@ class Transaction extends Model
             'transactions.created_at',
             'transactions.updated_at')
         ->leftjoin('customers', 'transactions.customer_id', '=', 'customers.id')
-        ->leftjoin('users as user_customer', 'customers.user_id', '=', 'user_customer.id')
         ->leftjoin('staff', 'transactions.staff_id', '=', 'staff.id')
-        ->leftjoin('users as user_staff', 'staff.user_id', '=', 'user_staff.id');
+        ->leftjoin('users as user_customer', 'customers.user_id', '=', 'user_customer.id')
+        ->leftjoin('users as user_staff', 'staff.user_id', '=', 'user_staff.id')
+        ->leftjoin('users as creator', 'transactions.creator_id', '=', 'creator.id')
+        ->leftjoin('role_user', 'creator.id', '=', 'role_user.user_id')
+        ->leftjoin('roles', 'role_user.role_id', '=', 'roles.id');
         return $data;
     }
 }

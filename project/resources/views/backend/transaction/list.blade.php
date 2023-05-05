@@ -74,8 +74,8 @@
 									<input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_server_side .form-check-input" value="1"/>
 								</div>
 							</th>
-							<th>Nama Pembeli</th>
-							<th>Nama Staff</th>
+							<th>Nama</th>
+							<th>Divalidasi oleh</th>
 							<th>Status</th>
 							<th>{{ __('main.transaction_date') }}</th>
 							<th class="text-end min-w-100px">{{__('main.action')}}</th>
@@ -225,7 +225,7 @@
 					},
 					columns: [
 						{ data: 'id' },
-						{ data: 'customer_name' },
+						{ data: 'creator_name' },
 						{ data: 'staff_name' },
 						{ data: 'status_transaction' },
 						{ data: 'transaction_date' },
@@ -240,6 +240,25 @@
 									<div class="form-check form-check-sm form-check-custom form-check-solid">
 										<input class="form-check-input" type="checkbox" value="${data}" />
 									</div>`;
+							}
+						},
+						{
+							targets: 1,
+							render: function (data, type, row) {
+								var	html = `<span class='text-black'>${row.creator_name}</span></br>
+											<span class='text-primary'>Role : ${row.roles}</span>
+											`;
+								return html;
+							}
+						},
+						{
+							targets: 2,
+							render: function (data, type, row) {
+								var html = row.staff_name;
+								if(row.staff_name == null){
+									html = `<span class='text-info'>Belum di validasi</span>`;
+								}
+								return html;
 							}
 						},
 						{
