@@ -139,9 +139,9 @@
                         <div class="col-md-3 mb-4">
                             <a href="javascript:void(0)" class="text-black">
                                 <div ${action} class="card card-product" id="${product.id}">
-                                    <img class="card-img-top" src="${product_assets}" alt="${product.name}">
+                                    <img class="card-img-top" src="${product_assets}" alt="${product.name}"  width="200" height="200">
                                     <div class="card-body card-hightlight" id="hightlight_id_${product.id}">
-                                        <h5 class="card-title product-name">${product.name}</h5>
+                                        <h5 class="card-title text-centerproduct-name">${product.name}</h5>
                                         <p class="card-text product text-center text-grey fw-semibold d-block fs-6 mt-n1">${product.product_type_name}</p>
                                         <p class="card-text product-price text-center text-end fw-bold fs-1" price="${product.selling_price}" >${formatted_price}</p>
                                         <p class="card-text product-stock text-center fw-bold">${product.stock}</p>
