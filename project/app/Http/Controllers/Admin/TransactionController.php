@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Staff;
+use App\Product;
 use App\Transaction;
 use App\TransactionDetail;
 use App\Traits\RespondsWithHttpStatus;
@@ -88,9 +89,26 @@ class TransactionController extends Controller
         if ($staffID) {
             $res->staff_id = $staffID;
         }
+
+        $transaction = Transaction::find($id);
+        if ($transaction->status_transaction == "finish") {
+            return $this->badRequest("Tidak dapat merubah status , karena transkasi sudah selesai");        
+        }
+        
+        $transactionDetails = TransactionDetail::where('transaction_id', $id)->get();
+        foreach ($transactionDetails as $transactionDetail) {
+            $product = Product::find($transactionDetail->product_id);
+            if ($product->stock < $transactionDetail->quantity) {
+                return response()->json(['message' => 'Not enough stock.'], 403);
+            }
+            $product->stock -= $transactionDetail->quantity;
+            $product->save();
+        }
+        
         $res->status_transaction = $request->status;
         $res->modifier_id = Auth::user()->id;
-        $res->save();        
+        $res->save();  
+        
         return $this->ok($res, null);        
     }
 

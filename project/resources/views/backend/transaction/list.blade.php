@@ -246,7 +246,7 @@
 							targets: 1,
 							render: function (data, type, row) {
 								var	html = `<span class='text-black'>${row.creator_name}</span></br>
-											<span class='text-primary'>Role : ${row.roles}</span>
+											<span class='text-primary'>Role : ${row.role_creator}</span>
 											`;
 								return html;
 							}
@@ -254,8 +254,9 @@
 						{
 							targets: 2,
 							render: function (data, type, row) {
-								var html = row.staff_name;
-								if(row.staff_name == null){
+								var	html = `<span class='text-black'>${row.modifier_name}</span></br>
+											<span class='text-primary'>Role : ${row.role_modifier}</span>`;								
+								if(row.staff_name == null && row.status_transaction == "pending"){
 									html = `<span class='text-info'>Belum di validasi</span>`;
 								}
 								return html;

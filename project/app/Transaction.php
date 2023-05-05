@@ -62,7 +62,9 @@ class Transaction extends Model
             'transactions.customer_id',
             'transactions.staff_id',
             'creator.name as creator_name',
-            'roles.display_name as roles',
+            'modifier.name as modifier_name',
+            'role_creator.display_name as role_creator',
+            'role_modifier.display_name as role_modifier',
             'user_customer.name as customer_name',
             'user_staff.name as staff_name',
             'transactions.transaction_date',
@@ -74,9 +76,15 @@ class Transaction extends Model
         ->leftjoin('staff', 'transactions.staff_id', '=', 'staff.id')
         ->leftjoin('users as user_customer', 'customers.user_id', '=', 'user_customer.id')
         ->leftjoin('users as user_staff', 'staff.user_id', '=', 'user_staff.id')
+       
         ->leftjoin('users as creator', 'transactions.creator_id', '=', 'creator.id')
-        ->leftjoin('role_user', 'creator.id', '=', 'role_user.user_id')
-        ->leftjoin('roles', 'role_user.role_id', '=', 'roles.id');
+        ->leftjoin('users as modifier', 'transactions.modifier_id', '=', 'modifier.id')
+        
+        ->leftjoin('role_user as role_user_creator', 'creator.id', '=', 'role_user_creator.user_id')
+        ->leftjoin('roles as role_creator', 'role_user_creator.role_id', '=', 'role_creator.id')
+
+        ->leftjoin('role_user as role_user_modifier', 'modifier.id', '=', 'role_user_modifier.user_id')
+        ->leftjoin('roles as role_modifier', 'role_user_modifier.role_id', '=', 'role_modifier.id');
         return $data;
     }
 }
