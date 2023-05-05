@@ -28,10 +28,10 @@ class ProductController extends Controller
             $query->when($request->has('search.value'), function ($q) use ($request) {
                 $value = $request->input('search.value');
                 $q->where(function ($query) use ($value) {
-                    $query->where('products.name', 'like', "%$value%")
-                        ->orWhere('products.status', 'like', "%$value%");
+                    $query->where('products.name', 'like', "%$value%");
                 });
             });
+            $query->where('products.status', '!=', 1);
         })
         ->addColumn('action', function ($data) {
             // add your action column logic here
