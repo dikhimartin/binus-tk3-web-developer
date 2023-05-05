@@ -98,21 +98,32 @@ Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam websi
      - Tambah Data
 
        - Tab Profil
+
+
+         
          ![](https://i.ibb.co/B2Br9Bs/tab-profile.png)
 
          
 
        - Tab Alamat
+
+
+         
          ![](https://i.ibb.co/zPR1YqG/tab-alamat.png)
 
          
 
        - Tab Akun
+
+
+         
          ![](https://i.ibb.co/7XQySkP/tab-akun.png)
 
        
 
      - Ubah Data
+
+       
        ![](https://i.ibb.co/KjLQrVQ/update-customer.png)
 
      
