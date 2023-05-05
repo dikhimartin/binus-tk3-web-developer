@@ -115,7 +115,7 @@ class ProductController extends Controller
 
         // set product assets
         $product_asset = Asset::upload($request->file('asset_id'), "product");
-        if ($product_asset['status'] == 'error') {
+        if (!empty($product_asset) && $product_asset['status'] == 'error') {
             return $this->badRequest($product_asset['message']);
         }
         
