@@ -89,13 +89,13 @@ Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam websi
 
    - ##### Pembeli
 
-     - Daftar Data
+     - Daftar Pembeli
 
        ![](https://i.ibb.co/Qfx9zPc/customer-list.png)
 
        
 
-     - Tambah Data
+     - Tambah Pembeli
 
        - Tab Profil
 
@@ -121,7 +121,8 @@ Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam websi
 
        
 
-     - Ubah Data
+     - Ubah Pembeli
+
 
        
        ![](https://i.ibb.co/KjLQrVQ/update-customer.png)
@@ -130,13 +131,65 @@ Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam websi
 
    - ##### Staff
 
+     - Daftar Staff
+
+       ![](https://i.ibb.co/9hbswX6/daftra-staff.png)
+
+       
+
+     - Tambah Staff
+
+       - Tab Profil
+
+
+         
+         ![](https://i.ibb.co/fpbYpmz/profil-tab.png)
+
+         
+
+       - Tab Akun
+
+
+         
+         ![](https://i.ibb.co/ySdRFqT/akun-tab.png)
+
+       
+
+     - Ubah Staff
+
+
+       
+       ![](https://i.ibb.co/gSCScsn/ubah-data.png)
+
+       
+
 5. #### Penjualan
+
+   - Daftar Penjualan
+
+     ![](https://i.ibb.co/fY97HBv/daftar-penjualan.png)
+
+     
+
+   - Detail Penjualan
+
+
+     
+     ![](https://i.ibb.co/mtwQsrv/detail-penjualan.png)
+
+   
 
 6. #### Akses Pengguna
 
    - ##### Daftar Pengguna
 
+     ![](https://i.ibb.co/Mp82vXb/daftar-pengguna.png)
+
+     
+
    - ##### Hak Akses Pengguna
+
+     ![](https://i.ibb.co/n1nBDTg/hak-akses-pengguna.png)
 
 
 
