@@ -84,7 +84,7 @@ class ProfileController extends Controller
 
         // set image assets
         $asset = Asset::upload($request->file('avatar'), "users", $user->asset_id);
-        if ($asset['status'] == 'error') {
+        if (!empty($asset) && $asset['status'] == 'error') {
             return $this->badRequest($asset['message']);
         }
         if (!empty($asset['data'])) {
