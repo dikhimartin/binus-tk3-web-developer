@@ -64,6 +64,7 @@
 		<script src="{{ URL::asset('assets/js/swal.bundle.js') }}"></script>
 		<script src="{{ URL::asset('assets/js/toastr.bundle.js') }}"></script>
 		<script src="{{ URL::asset('assets/js/currency.js') }}"></script>
+		<script src="{{ URL::asset('assets/js/date.js') }}"></script>
 		@stack('private_js')
 	</body>
 </html>

@@ -21,6 +21,9 @@
                 <li class="breadcrumb-item text-muted">{!! $pages_title !!}</li>
             </ul>
         </div>
+        @isset($content_slot)
+            {!! $content_slot !!}
+        @endisset
     </div>
 </div>
 
