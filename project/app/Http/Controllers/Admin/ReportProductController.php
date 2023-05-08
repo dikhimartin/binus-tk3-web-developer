@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Traits\RespondsWithHttpStatus;
+use Illuminate\Support\Facades\Auth;
+
+class ReportProductController extends Controller
+{
+    use RespondsWithHttpStatus;
+    
+    private $permission = 'report';
+
+    private $controller = 'product-report';
+
+    private function title(){
+        return __('main.product-report');
+    }
+
+    public function __construct() {
+        $this->middleware('auth');
+    }     
+
+    public function index(){
+        if (!Auth::user()->can($this->permission.'-list')){
+            return view('backend.errors.401')->with(['url' => '/admin']);
+        }
+        return view('backend.'.$this->permission.'.'.$this->controller.'.index')->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
+    }
+}

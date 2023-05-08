@@ -265,6 +265,15 @@ class PermissionsTableSeeder extends Seeder
                 'sort' => 1,
                 'created_at' => now(),
                 'updated_at' => now()
+            ],
+            [
+                'id' => 29,
+                'name' => 'report-list',
+                'display_name' => 'Laporan',
+                'description' => 'Laporan',
+                'sort' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
             ]
             // add new permissions here 
         ]);

@@ -41,6 +41,7 @@ class PermissionRoleTableSeeder extends Seeder
             [26, 1],
             [27, 1],
             [28, 1],
+            [29, 1],
             [1, 2],
             [5, 2],
             [9, 2],
@@ -63,6 +64,7 @@ class PermissionRoleTableSeeder extends Seeder
             [26, 2],
             [27, 2],
             [28, 2],
+            [29, 2],
             [9, 3],
             [10, 3],
             [11, 3],
@@ -83,6 +85,7 @@ class PermissionRoleTableSeeder extends Seeder
             [26, 3],
             [27, 3],
             [28, 3],
+            [29, 3],
         ];
 
         foreach ($records as $record) {

@@ -54,6 +54,43 @@
                     </div>
                 @endif
 
+
+                @if ($user->can('report-list'))
+                    <div data-kt-menu-trigger="click" class="menu-item {{ in_array($sidebarActive, ['transaction-report','product-report']) ? 'here show menu-accordion' : '' }}">
+                        <!--begin:Menu link-->
+                        <span class="menu-link ">
+                            <span class="menu-icon">
+                                <i class="fa-solid fa-server"></i>
+                            </span>
+                            <span class="menu-title">{{__('main.report')}}</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <!--begin:Menu sub-->
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <a class="menu-link {!! $sidebarActive == 'transaction-report' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/report/transaction' ))}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('main.transaction-report') }}</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-item">
+                                <a class="menu-link {!! $sidebarActive == 'product-report' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/report/product' ))}}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('main.product-report') }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>                
+                 @endif
+
+                
+
                  @if ($user->can('product-type-list') || $user->can('product-list') || $user->can('customer-list') || $user->can('staff-list') )
                     <div data-kt-menu-trigger="click" class="menu-item {{ in_array($sidebarActive, ['product','product-type','customer', 'staff']) ? 'here show menu-accordion' : '' }}">
                         <!--begin:Menu link-->

@@ -156,6 +156,14 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::delete('/transactions/{id}','TransactionController@delete');
 	Route::post('/transactions/delete/batch','TransactionController@delete_batch');
 
+	/*
+	 |--------------------------------------------------------------------------
+	 | Module Report
+	 |--------------------------------------------------------------------------
+	*/	
+	Route::get('/report/transaction','ReportTransactionController@index');
+	Route::get('/report/product','ReportProductController@index');
+
 });
 
 

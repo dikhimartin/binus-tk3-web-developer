@@ -140,4 +140,9 @@ return [
     'pending' => 'Menunggu',
     'reject' => 'Ditolak',
     'finish' => 'Selesai',
+
+    // Report
+    'report' => 'Laporan',
+    'transaction-report' => 'Laporan Transaksi',
+    'product-report' => 'Laporan Produk',
 ];
