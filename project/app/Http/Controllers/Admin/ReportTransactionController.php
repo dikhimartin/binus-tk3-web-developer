@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\RespondsWithHttpStatus;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
+use App\Transaction;
 
 class ReportTransactionController extends Controller
 {
@@ -29,4 +31,26 @@ class ReportTransactionController extends Controller
         }
         return view('backend.'.$this->permission.'.'.$this->controller.'.index')->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
     }
+
+    public function get_data(Request $request){
+        $trx = new Transaction;
+        $datas = $trx->get_data();
+
+        return DataTables::of($datas)
+        ->filter(function ($query) use ($request) {
+            $query->when($request->has('search.value'), function ($q) use ($request) {
+                $value = $request->input('search.value');
+                $q->where(function ($query) use ($value) {
+                    $query->where('transactions.transaction_date', 'like', "%$value%")
+                        ->orWhere('transactions.status_transaction', 'like', "%$value%");
+                });
+            });
+        })
+        ->addColumn('action', function ($data) {
+            // add your action column logic here
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+    }
+
 }

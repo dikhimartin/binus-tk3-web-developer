@@ -75,6 +75,7 @@
 							<th>Divalidasi oleh</th>
 							<th>Status</th>
 							<th>{{ __('main.transaction_date') }}</th>
+							<th>Total</th>
 							<th class="text-end min-w-100px">{{__('main.action')}}</th>
 						</tr>
 						</thead>
@@ -102,7 +103,7 @@
 	<script>
 		"use strict";
 
-		const URL_API = `{{ url('admin/transactions') }}`
+		const URL_API = `{{ url('admin/report/transactios') }}`
 
 		function show_transaction_detail(id) {
 			// Fetching data
@@ -190,6 +191,7 @@
 						{ data: 'modifier_name' },
 						{ data: 'status_transaction' },
 						{ data: 'transaction_date' },
+						{ data: 'id' },
 						{ data: null },
 					],
 					columnDefs: [
