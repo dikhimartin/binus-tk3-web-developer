@@ -44,19 +44,6 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-12 mt-6">
-					<div class="card">
-						<div class="card-header">
-							<h3 class="card-title align-items-start flex-column">
-								<span class="card-label fw-bold text-gray-800">Detail Prosentase Produk terlaris</span>
-								<!-- <span class="text-gray-400 mt-1 fw-semibold fs-6">8k social visitors</span> -->
-							</h3>
-						</div>
-						<div class="card-body">
-							<!-- Lorem Ipsum is simply dummy text... -->
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -68,6 +55,8 @@
     <script src="{{ URL::asset('assets/plugins/custom/highcharts/exporting.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/custom/highcharts/series-label.js') }}"></script>
 	<script>
+		const URL_API = `{{ url('admin/report/product') }}`
+
 		function show_report() {
 			var dateValue = $("#date_value").text();
 			var startDate = '';
@@ -81,61 +70,57 @@
 				startDate = dateValue;
 			}
 			// Use startDate and endDate variables as needed
-			console.log("Start Date:", formatDate(startDate));
+			startDate = formatDate(startDate)
 			if(endDate != ''){
-				console.log("End Date:", formatDate(endDate));
+				endDate = formatDate(endDate);
 			}
 			bar_chart_report(startDate, endDate)
 		}
 		
 		function bar_chart_report(startDate, endDate) {
 			var dateValue = $("#date_value").text();
-			Highcharts.chart('bar-chart-products-report', {
-				chart: {
-					type: 'column'
-				},
-				title: {
-					text: `Laporan ${dateValue}`
-				},
-				subtitle: {
-					text: 'Top 10 Produk'
-				},
-				xAxis: {
-					categories: ['Popular Products Transactions'],
-					crosshair: true
-				},
-				yAxis: {
-					min: 0,
-					title: {
-						text: 'Total Transaction'
-					}
-				},
-				series: [{
-					name: 'Carrot Cake',
-					data: [35]
-				}, {
-					name: 'Red Velvet Cake',
-					data: [30]
-				}, {
-					name: 'Chocholate Cake',
-					data: [25]
-				}, {
-					name: 'Lava Cake',
-					data: [25]
-				}, {
-					name: 'Sandwich',
-					data: [20]
-				}, {
-					name: 'Creamy Pasta',
-					data: [15]
-				}, {
-					name: 'French Fries',
-					data: [10]
-				}, {
-					name: 'Americano',
-					data: [5]
-				}, ]
-			});			
+			$.ajax({
+					url : URL_API + '/best_selling',
+                    type: "GET",
+                    dataType: "JSON",
+                    data: {
+						"start_date":startDate,
+						"end_date":endDate
+					},
+                    headers:
+                    {
+                        'X-CSRF-Token': $('input[name="_token"]').val()
+                    },
+                    success: function(response){
+						if (response.status.code === 200) {
+							Highcharts.chart('bar-chart-products-report', {
+								chart: {
+									type: 'column'
+								},
+								title: {
+									text: `Laporan ${dateValue}`
+								},
+								subtitle: {
+									text: `Top ${response.data.length} Produk`
+								},
+								xAxis: {
+									categories: ['Popular Products Transactions'],
+									crosshair: true
+								},
+								yAxis: {
+									min: 0,
+									title: {
+										text: 'Total Transaction'
+									}
+								},
+								series: response.data
+							});	
+						}
+                    },
+                    error: function (response){
+                        ToastrError(response);
+                    }
+                })      	
 		}
 	</script>
 @endpush

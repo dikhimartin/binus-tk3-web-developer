@@ -162,8 +162,9 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	 |--------------------------------------------------------------------------
 	*/	
 	Route::get('/report/transaction','ReportTransactionController@index');
-	Route::get('/report/product','ReportProductController@index');
 
+	Route::get('/report/product','ReportProductController@index');
+	Route::get('/report/product/best_selling','ReportProductController@get_best_selling_product');
 });
 
 
