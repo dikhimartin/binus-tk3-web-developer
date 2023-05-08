@@ -103,13 +103,12 @@
 	<script>
 		"use strict";
 
-		const URL_API = `{{ url('admin/report/transactios') }}`
 
 		function show_transaction_detail(id) {
 			// Fetching data
 			$('#{{ $controller  }}_header_title').text(`{{ __('main.transaction_detail') }}`);
 			$.ajax({
-				url : URL_API + '/' + id + "/detail",
+				url : `{{ url('admin/transactions') }}` + '/' + id + "/detail",
 				type: "GET",
 				dataType: "JSON",             
 				success: function(response){
@@ -184,14 +183,14 @@
 						className: 'row-selected'
 					},
 					ajax: {
-						url: URL_API,
+						url: `{{ url('admin/report/transactions') }}`,
 					},
 					columns: [
 						{ data: 'creator_name' },
 						{ data: 'modifier_name' },
 						{ data: 'status_transaction' },
 						{ data: 'transaction_date' },
-						{ data: 'id' },
+						{ data: 'total_price' },
 						{ data: null },
 					],
 					columnDefs: [
@@ -223,6 +222,12 @@
 								var labelText = arrStatus[data] || '';
 								var labelClass = arrLabel[data] || '';
 								return '<span class="badge badge-' + labelClass + '">' + labelText + '</span>';
+							}
+						},
+						{
+							targets: 4,
+							render: function (data, type, row) {
+								return  IDRCurrency(row.total_price);
 							}
 						},
 						{

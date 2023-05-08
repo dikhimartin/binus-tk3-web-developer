@@ -34,7 +34,7 @@ class ReportTransactionController extends Controller
 
     public function get_data(Request $request){
         $trx = new Transaction;
-        $datas = $trx->get_data();
+        $datas = $trx->get_data_with_detail();
 
         return DataTables::of($datas)
         ->filter(function ($query) use ($request) {
@@ -52,5 +52,6 @@ class ReportTransactionController extends Controller
         ->rawColumns(['action'])
         ->make(true);
     }
+
 
 }

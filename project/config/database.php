@@ -36,7 +36,7 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => 'tb_',
+            'prefix' => null,
         ],
 
         'mysql' => [
@@ -49,7 +49,7 @@ return [
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => 'tb_',
+            'prefix' => null,
             'strict' => false,
             'engine' => null,
         ],
@@ -62,7 +62,7 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
-            'prefix' => 'tb_',
+            'prefix' => null,
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
@@ -75,7 +75,7 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
-            'prefix' => 'tb_',
+            'prefix' => null,
         ],
 
     ],
