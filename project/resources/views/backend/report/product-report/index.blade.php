@@ -57,6 +57,10 @@
 	<script>
 		const URL_API = `{{ url('admin/report/product') }}`
 
+		$( document ).ready(function() {
+			show_report();
+		});
+
 		function show_report() {
 			var dateValue = $("#date_value").text();
 			var startDate = '';
