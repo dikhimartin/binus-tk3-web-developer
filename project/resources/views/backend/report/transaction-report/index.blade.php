@@ -114,25 +114,40 @@
 				success: function(response){
 					if (response.status.code === 200) {
 						const data = response.data;
-
 						// Generate table
 						const table = $('<table>').addClass('table align-middle table-row-dashed fs-6 gy-5 mb-0');
 						const thead = $('<thead>').appendTo(table);
-						const tr = $('<tr>').addClass('text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0').appendTo(thead);
-						$('<th>').text('Nama Produk').appendTo(tr);
-						$('<th>').text('Harga').appendTo(tr);
-						$('<th>').text('Kuantitas').appendTo(tr);
-						$('<th>').text('Sub Harga').appendTo(tr);
+						const trHead = $('<tr>').addClass('text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0').appendTo(thead);
+						$('<th>').text('Nama Produk').appendTo(trHead);
+						$('<th>').text('Harga').appendTo(trHead);
+						$('<th>').text('Kuantitas').appendTo(trHead);
+						$('<th>').text('Sub Harga').appendTo(trHead);
 						const tbody = $('<tbody>').appendTo(table);
 
-						// Looping data transaction detail
-						data.transaction_details.forEach(function(detail) {
+						// Loop through transaction details data
+						data.transaction_details.forEach(function (detail) {
 							const tr = $('<tr>').appendTo(tbody);
 							$('<td>').text(detail.product.name).appendTo(tr);
 							$('<td>').text(IDRCurrency(detail.price)).appendTo(tr);
 							$('<td>').text(detail.quantity).appendTo(tr);
 							$('<td>').text(IDRCurrency(detail.sub_price)).appendTo(tr);
 						});
+
+						// Calculate total
+						const totalQuantity = data.transaction_details.reduce(function (total, detail) {
+							return total + detail.quantity;
+						}, 0);
+						const totalPrice = data.transaction_details.reduce(function (total, detail) {
+							const subPrice = parseFloat(detail.sub_price.replace(/[^0-9.-]+/g, ''));
+							return total + subPrice;
+						}, 0);
+
+						// Add total row
+						const trTotal = $('<tr>').appendTo(tbody);
+						$('<td>').text('Total').appendTo(trTotal);
+						$('<td>').text('').appendTo(trTotal);
+						$('<td>').text(totalQuantity).appendTo(trTotal);
+						$('<td>').text(IDRCurrency(totalPrice)).appendTo(trTotal);
 
 						$('#transaction-detail').empty().append(table);
 						$('#{{ $controller  }}').modal('show');	
