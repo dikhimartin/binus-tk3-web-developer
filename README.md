@@ -63,7 +63,7 @@ Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam websi
 
 2. #### Profil
 
-   ![profile.png]([https://i.ibb.co/wNPbDZ9/profile.png](https://camo.githubusercontent.com/e56cd3caa80c4690cc3547feaaf0b58e424af7df6dc4ab0267717bcada0d1d7e/68747470733a2f2f692e6962622e636f2f774e5062445a392f70726f66696c652e706e67)
+   ![]([https://camo.githubusercontent.com/e56cd3caa80c4690cc3547feaaf0b58e424af7df6dc4ab0267717bcada0d1d7e/68747470733a2f2f692e6962622e636f2f774e5062445a392f70726f66696c652e706e67)
 
    
 
